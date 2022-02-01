@@ -11,7 +11,7 @@ pd.set_option('display.width', 1500)      # макс. ширина таблиц�
 
 
 def main():
-    load_data = SharesDataLoader('SBRF')
+    load_data = SharesDataLoader('SBER')
     load_data.connect_to_metatrader5(path=f"C:\Program Files\FINAM MetaTrader 5\terminal64.exe")
     load_data.export_to_db( host="192.168.0.200",
                             user="sharesuser",
@@ -25,13 +25,13 @@ def main():
     # SBER_D1 = load_data.get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_D1, utc_till=utc_till, how_many_bars=how_many_bars)
     # print(SBER_D1)
 
-    #load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_M1, table_name="SBER_M1")
+    load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_M1, table_name="SBER_M1")
     #load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_M5, table_name="SBER_M5")
     #load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_M15, table_name="SBER_M15")
     #load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_M30, table_name="SBER_M30")      # ERROR !!!!
     #load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_H1, table_name="SBER_H1")
     #load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_H4, table_name="SBER_H4")
-    load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_D1, table_name="SBER_D1")
+    #load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_D1, table_name="SBER_D1")
 
     # для работы потоков - нужно поменять код ))) сделаем попозже - можно просто копии файлов в расписании повесить - будет проще
     # thread_sber_m1 = Thread(target=load_data.always_get_share_data, args=("SBER", mt5.TIMEFRAME_M1, "SBER_M1",))
