@@ -55,6 +55,19 @@ class SharesDataLoader():
             rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
         return rates_frame
 
+    def get_share_data_from_db(self, ticket, timeframe, how_many_bars):
+        table_name = ticket + "_" + timeframe
+        self.cursor.execute(
+            "SELECT time, open, high, low, close, volume FROM `" + table_name + "`" + " ORDER BY time DESC LIMIT " + str(how_many_bars)
+        )
+
+        # Get all data from table
+        rows = self.cursor.fetchall()
+        dataframe = pd.DataFrame(rows, columns=["Date", "Open", "High", "Low", "Close", "Volume"])
+        dataframe = dataframe[::-1].reset_index(drop=True)  # Reverse Ordering of DataFrame Rows + Reset index
+        #print(dataframe.dtypes)
+        return dataframe
+
     def always_get_share_data(self, ticket, timeframe, table_name):
         how_many_bars = 0
         time_in_seconds_bar = 0
