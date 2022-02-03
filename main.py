@@ -26,11 +26,11 @@ def main():
     # SBER_D1 = load_data.get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_D1, utc_till=utc_till, how_many_bars=how_many_bars)
     # print(SBER_D1)
 
-    how_many_bars = 10
-    data = load_data.get_share_data_from_db(ticket="SBER", timeframe="D1", how_many_bars=how_many_bars)
-    print(data)
+    # how_many_bars = 10
+    # data = load_data.get_share_data_from_db(ticket="SBER", timeframe="D1", how_many_bars=how_many_bars)
+    # print(data)
 
-    #load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_M1, table_name="SBER_M1")
+    load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_M1, table_name="SBER_M1")
     #load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_M5, table_name="SBER_M5")
     #load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_M15, table_name="SBER_M15")
     #load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_M30, table_name="SBER_M30")      # ERROR !!!!
