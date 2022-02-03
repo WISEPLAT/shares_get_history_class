@@ -13,7 +13,7 @@ pd.set_option('display.width', 1500)      # макс. ширина таблиц�
 def main():
     load_data = SharesDataLoader('SBER')
     load_data.connect_to_metatrader5(path=f"C:\Program Files\FINAM MetaTrader 5\terminal64.exe")
-    load_data.export_to_db( host="192.168.0.200",
+    load_data.connect_to_db( host="192.168.0.200",
                             user="sharesuser",
                             passwd="SomePassword123",
                             db="shares")

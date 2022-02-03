@@ -36,7 +36,7 @@ class SharesDataLoader():
         mt5.shutdown()
         print("Disconnection from MetaTrader5: OK")
 
-    def export_to_db(self, host, user, passwd, db):
+    def connect_to_db(self, host, user, passwd, db):
         try:
             self.conn = MySQLdb.connect(host=host, user=user, passwd=passwd, db=db)
             self.cursor = self.conn.cursor()
