@@ -11,7 +11,7 @@ pd.set_option('display.width', 1500)      # макс. ширина таблиц�
 
 
 def main():
-    ticket = "LKOH" # GMKN SBER
+    ticket = "SBER" # GMKN SBER LKOH GAZP
     timeframe = mt5.TIMEFRAME_D1
     how_many_bars = 50000
 
@@ -34,7 +34,7 @@ def main():
     # data = load_data.get_share_data_from_db(ticket="SBER", timeframe=mt5.TIMEFRAME_D1, how_many_bars=how_many_bars)
     # print(data)
 
-    #load_data.always_get_share_data(ticket=ticket, timeframe=timeframe)
+    load_data.always_get_share_data(ticket=ticket, timeframe=timeframe)
     load_data.export_to_csv(ticket=ticket, timeframe=timeframe, how_many_bars=how_many_bars, export_dir="csv_export")
 
     #load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_M1)
