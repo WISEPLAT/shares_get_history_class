@@ -18,7 +18,7 @@ def main():
                             passwd="SomePassword123",
                             db="shares")
 
-    load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_D1, table_name="SBER_D1")
+    load_data.always_get_share_data(ticket="SBER", timeframe=mt5.TIMEFRAME_D1)
 
     load_data.disconnect_from_metatrader5()
 

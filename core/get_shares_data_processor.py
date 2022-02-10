@@ -1,3 +1,4 @@
+import os
 import cv2
 import MySQLdb                  # импортируем модуль для работы с БД MySql
 import MetaTrader5 as mt5       # импортируем модуль для подключения к MetaTrader5
@@ -56,6 +57,14 @@ class SharesDataLoader():
         return rates_frame
 
     def get_share_data_from_db(self, ticket, timeframe, how_many_bars):
+        if timeframe == mt5.TIMEFRAME_D1:   timeframe = "D1"
+        if timeframe == mt5.TIMEFRAME_H4:   timeframe = "H4"
+        if timeframe == mt5.TIMEFRAME_H1:   timeframe = "H1"
+        if timeframe == mt5.TIMEFRAME_M30:  timeframe = "M30"
+        if timeframe == mt5.TIMEFRAME_M15:  timeframe = "M15"
+        if timeframe == mt5.TIMEFRAME_M5:   timeframe = "M5"
+        if timeframe == mt5.TIMEFRAME_M1:   timeframe = "M1"
+
         table_name = ticket + "_" + timeframe
         self.cursor.execute(
             "SELECT time, open, high, low, close, volume FROM `" + table_name + "`" + " ORDER BY time DESC LIMIT " + str(how_many_bars)
@@ -68,16 +77,50 @@ class SharesDataLoader():
         #print(dataframe.dtypes)
         return dataframe
 
-    def always_get_share_data(self, ticket, timeframe, table_name):
+    def export_to_csv(self, ticket, timeframe, how_many_bars, export_dir):
+        _timeframe = "D1"
+        if timeframe == mt5.TIMEFRAME_D1:   _timeframe = "D1"
+        if timeframe == mt5.TIMEFRAME_H4:   _timeframe = "H4"
+        if timeframe == mt5.TIMEFRAME_H1:   _timeframe = "H1"
+        if timeframe == mt5.TIMEFRAME_M30:  _timeframe = "M30"
+        if timeframe == mt5.TIMEFRAME_M15:  _timeframe = "M15"
+        if timeframe == mt5.TIMEFRAME_M5:   _timeframe = "M5"
+        if timeframe == mt5.TIMEFRAME_M1:   _timeframe = "M1"
+
+        table_name = ticket + "_" + _timeframe
+        self.cursor.execute(
+            "SELECT time, open, high, low, close, volume FROM `" + table_name + "`" + " ORDER BY time DESC LIMIT " + str(how_many_bars)
+        )
+
+        # Get all data from table
+        rows = self.cursor.fetchall()
+        dataframe = pd.DataFrame(rows, columns=["Date", "Open", "High", "Low", "Close", "Volume"])
+        dataframe = dataframe[::-1].reset_index(drop=True)  # Reverse Ordering of DataFrame Rows + Reset index
+
+        if not os.path.exists(export_dir): os.makedirs(export_dir)
+        dataframe.to_csv(os.path.join(export_dir, ticket+"_"+_timeframe+".csv"), index=False, encoding='utf-8')
+
+    def always_get_share_data(self, ticket, timeframe):
+        _timeframe = "D1"
         how_many_bars = 0
         time_in_seconds_bar = 0
-        if timeframe == mt5.TIMEFRAME_D1:   time_in_seconds_bar = 86400   # 60*60*24
-        if timeframe == mt5.TIMEFRAME_H4:   time_in_seconds_bar = 14400   # 60*60*4
-        if timeframe == mt5.TIMEFRAME_H1:   time_in_seconds_bar = 3600    # 60*60
-        if timeframe == mt5.TIMEFRAME_M30:  time_in_seconds_bar = 1800    # 60*30
-        if timeframe == mt5.TIMEFRAME_M15:  time_in_seconds_bar = 900     # 60*15
-        if timeframe == mt5.TIMEFRAME_M5:   time_in_seconds_bar = 300     # 60*5
-        if timeframe == mt5.TIMEFRAME_M1:   time_in_seconds_bar = 60      # 60
+        if timeframe == mt5.TIMEFRAME_D1:   time_in_seconds_bar = 86400  # 60*60*24
+        if timeframe == mt5.TIMEFRAME_H4:   time_in_seconds_bar = 14400  # 60*60*4
+        if timeframe == mt5.TIMEFRAME_H1:   time_in_seconds_bar = 3600  # 60*60
+        if timeframe == mt5.TIMEFRAME_M30:  time_in_seconds_bar = 1800  # 60*30
+        if timeframe == mt5.TIMEFRAME_M15:  time_in_seconds_bar = 900  # 60*15
+        if timeframe == mt5.TIMEFRAME_M5:   time_in_seconds_bar = 300  # 60*5
+        if timeframe == mt5.TIMEFRAME_M1:   time_in_seconds_bar = 60  # 60
+
+        if timeframe == mt5.TIMEFRAME_D1:   _timeframe = "D1"
+        if timeframe == mt5.TIMEFRAME_H4:   _timeframe = "H4"
+        if timeframe == mt5.TIMEFRAME_H1:   _timeframe = "H1"
+        if timeframe == mt5.TIMEFRAME_M30:  _timeframe = "M30"
+        if timeframe == mt5.TIMEFRAME_M15:  _timeframe = "M15"
+        if timeframe == mt5.TIMEFRAME_M5:   _timeframe = "M5"
+        if timeframe == mt5.TIMEFRAME_M1:   _timeframe = "M1"
+
+        table_name = ticket + "_" + _timeframe
 
         # ----------------------- UPDATE HISTORY -----------------------
         while True:
