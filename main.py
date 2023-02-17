@@ -13,7 +13,7 @@ pd.set_option('display.width', 1500)      # макс. ширина таблиц�
 
 def main():
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    how_many_bars = 50000
+    how_many_bars = 70000
 
     utc_till = datetime.datetime.now() + datetime.timedelta(days=1)  # получим данные по завтрашний день
     # utc_till = datetime.datetime.now() - datetime.timedelta(days=1)  # получим данные по вчерашний день
@@ -25,7 +25,8 @@ def main():
     for timeframe in timeframes:
         for ticket in tickers:
             load_data = SharesDataLoader(ticket)
-            load_data.connect_to_metatrader5(path=f"C:\Program Files\FINAM MetaTrader 5\terminal64.exe")
+            # load_data.connect_to_metatrader5(path=f"C:\Program Files\FINAM MetaTrader 5\terminal64.exe")
+            load_data.connect_to_metatrader5(path=f"C:\Program Files\Открытие Брокер\terminal64.exe")
             # load_data.connect_to_db(host="192.168.20.200",
             #                         user="sharesuser",
             #                         passwd="SomePassword123",
