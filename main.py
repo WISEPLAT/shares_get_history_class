@@ -26,10 +26,10 @@ def main():
         for ticket in tickers:
             load_data = SharesDataLoader(ticket)
             load_data.connect_to_metatrader5(path=f"C:\Program Files\FINAM MetaTrader 5\terminal64.exe")
-            load_data.connect_to_db(host="192.168.0.200",
-                                    user="sharesuser",
-                                    passwd="SomePassword123",
-                                    db="shares")
+            # load_data.connect_to_db(host="192.168.20.200",
+            #                         user="sharesuser",
+            #                         passwd="SomePassword123",
+            #                         db="shares")
 
             data = load_data.get_share_data(ticket=ticket, timeframe=timeframe, utc_till=utc_till, how_many_bars=how_many_bars)
             # print(data)
