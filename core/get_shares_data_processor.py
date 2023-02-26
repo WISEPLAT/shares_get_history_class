@@ -79,6 +79,8 @@ class SharesDataLoader():
 
     def export_to_csv_from_df(self, ticket, timeframe, data, export_dir):
         _timeframe = "D1"
+        if timeframe == mt5.TIMEFRAME_MN1:   _timeframe = "MN1"
+        if timeframe == mt5.TIMEFRAME_W1:   _timeframe = "W1"
         if timeframe == mt5.TIMEFRAME_D1:   _timeframe = "D1"
         if timeframe == mt5.TIMEFRAME_H4:   _timeframe = "H4"
         if timeframe == mt5.TIMEFRAME_H1:   _timeframe = "H1"
@@ -97,6 +99,8 @@ class SharesDataLoader():
 
     def export_to_csv(self, ticket, timeframe, how_many_bars, export_dir):
         _timeframe = "D1"
+        if timeframe == mt5.TIMEFRAME_MN1:  _timeframe = "MN1"
+        if timeframe == mt5.TIMEFRAME_W1:   _timeframe = "W1"
         if timeframe == mt5.TIMEFRAME_D1:   _timeframe = "D1"
         if timeframe == mt5.TIMEFRAME_H4:   _timeframe = "H4"
         if timeframe == mt5.TIMEFRAME_H1:   _timeframe = "H1"
@@ -130,6 +134,8 @@ class SharesDataLoader():
         if timeframe == mt5.TIMEFRAME_M5:   time_in_seconds_bar = 300  # 60*5
         if timeframe == mt5.TIMEFRAME_M1:   time_in_seconds_bar = 60  # 60
 
+        if timeframe == mt5.TIMEFRAME_MN1:  _timeframe = "MN1"
+        if timeframe == mt5.TIMEFRAME_W1:   _timeframe = "W1"
         if timeframe == mt5.TIMEFRAME_D1:   _timeframe = "D1"
         if timeframe == mt5.TIMEFRAME_H4:   _timeframe = "H4"
         if timeframe == mt5.TIMEFRAME_H1:   _timeframe = "H1"
