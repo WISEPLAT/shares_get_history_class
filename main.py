@@ -21,12 +21,13 @@ def main():
 
     timeframes = {mt5.TIMEFRAME_M5, mt5.TIMEFRAME_M10, mt5.TIMEFRAME_M15, mt5.TIMEFRAME_M30, mt5.TIMEFRAME_H1, mt5.TIMEFRAME_H4, mt5.TIMEFRAME_D1, mt5.TIMEFRAME_W1, mt5.TIMEFRAME_MN1}
     tickers = {"VTBR", "GMKN", "SBER", "LKOH", "GAZP", "CHMF", "AFLT", "PLZL"}
+    tickers = {"ALLFUTRTSI"}  # только через Финам ..
 
     for timeframe in timeframes:
         for ticket in tickers:
             load_data = SharesDataLoader(ticket)
-            # load_data.connect_to_metatrader5(path=f"C:\Program Files\FINAM MetaTrader 5\terminal64.exe")
-            load_data.connect_to_metatrader5(path=f"C:\Program Files\Открытие Брокер\terminal64.exe")
+            load_data.connect_to_metatrader5(path=f"C:\Program Files\FINAM MetaTrader 5\terminal64.exe")
+            # load_data.connect_to_metatrader5(path=f"C:\Program Files\Открытие Брокер\terminal64.exe")
             # load_data.connect_to_db(host="192.168.20.200",
             #                         user="sharesuser",
             #                         passwd="SomePassword123",
