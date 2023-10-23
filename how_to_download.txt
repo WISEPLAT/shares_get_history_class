@@ -1,0 +1,34 @@
+1. Quik => QuikPy
+    https://github.com/cia76/QuikPy/blob/master/Examples/04_Bars.py
+
+    + С любого квика получаешь данные, которые есть у брокера
+    - Нет глубокой истории, т.е. нет данных раньше 2017 / 2007
+
+2. По API получаем исторические данные:
+    https://github.com/cia76/AlorPy
+    https://github.com/cia76/FinamPy
+    https://github.com/cia76/TinkoffPy
+
+    + Получаешь данные по API, которые есть у брокера
+    - Нет глубокой истории, т.е. нет данных раньше 2017 / 2007
+
+3. Как получить максимальную историю по тикерам:
+    https://github.com/WISEPLAT/export_import_data
+
+    + Тянем всю историю с Финама с древних времен
+    - Нет сплитов в данных - нужно их применять самому
+    - если Финам изменит ссылку или доступ ограничит, то всё...
+
+4. MetaTrader5
+    https://github.com/WISEPLAT/shares_get_history_class
+
+    + С любого MetaTrader5 получаешь данные, которые есть у брокера
+    + У Финама есть склеенные фьючерсы, т.е. не нужно их самому генерить
+    - Нет глубокой истории, т.е. нет данных раньше 2017 / 2007
+
+5. Исторические данные с MOEX
+    https://github.com/WISEPLAT/Hackathon-Finam-NN-Trade-Robot/blob/master/1_get_historical_data_for_strategy_from_moex.py
+
+    + Работает без брокера
+    - Задержка на 15 мин в live
+    - Есть ли глубокая история - не проверял
