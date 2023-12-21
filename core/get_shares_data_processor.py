@@ -47,13 +47,27 @@ class SharesDataLoader():
             print("connection to DB failed, error code =", ex)
             quit()
 
-    def get_share_data(self, ticket, timeframe, utc_till, how_many_bars):
+    def get_share_data(self, ticket, timeframe, utc_till, how_many_bars, remove_today_bars=False):
         rates = mt5.copy_rates_from(ticket, timeframe, utc_till, how_many_bars)
         # создадим из полученных данных DataFrame
         rates_frame = pd.DataFrame(rates)
         # сконвертируем время в виде секунд в формат datetime
         if len(rates_frame.index):
             rates_frame['time'] = pd.to_datetime(rates_frame['time'], unit='s')
+
+            if remove_today_bars:  # обрезка данных до now
+                now = datetime.datetime.fromisoformat(datetime.datetime.now().strftime('%Y-%m-%d') + " " + "00:00")
+                rates_frame.set_index('time', inplace=True)
+                indexes = rates_frame.index.tolist()
+                for j in range(1, len(indexes) + 1):
+                    if indexes[len(indexes) - j] < now:
+                        print("ok j = ", j)
+                        # df_new = df_new[len(indexes) - j + 1:]      # хвост данных
+                        rates_frame = rates_frame[:len(indexes) - j + 1]
+                        break
+                rates_frame.reset_index(inplace=True)
+                print(rates_frame)
+
         return rates_frame
 
     def get_share_data_from_db(self, ticket, timeframe, how_many_bars):
