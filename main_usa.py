@@ -18,8 +18,8 @@ def main():
     utc_till = datetime.datetime.now() + datetime.timedelta(days=1)  # получим данные по завтрашний день
     print(utc_till)
 
-    # timeframes = {mt5.TIMEFRAME_M5, mt5.TIMEFRAME_M10, mt5.TIMEFRAME_M15, mt5.TIMEFRAME_M30, mt5.TIMEFRAME_H1, mt5.TIMEFRAME_H4, mt5.TIMEFRAME_D1, mt5.TIMEFRAME_W1, mt5.TIMEFRAME_MN1}
-    timeframes = {mt5.TIMEFRAME_D1, }
+    timeframes = {mt5.TIMEFRAME_M5, mt5.TIMEFRAME_M10, mt5.TIMEFRAME_M15, mt5.TIMEFRAME_M30, mt5.TIMEFRAME_H1, mt5.TIMEFRAME_H4, mt5.TIMEFRAME_D1, mt5.TIMEFRAME_W1, mt5.TIMEFRAME_MN1}
+    # timeframes = {mt5.TIMEFRAME_D1, }
     tickers = {"MSFT.US", "BAC.US"}
     # tickers = {"ALLFUTRTSI"}  # только через Финам ..
 
