@@ -13,8 +13,8 @@ pd.set_option('display.width', 1500)      # макс. ширина таблиц�
 
 def main():
     current_dir = os.path.dirname(os.path.abspath(__file__))  # текущая директория
-    # how_many_bars = 70000  # сколько баров закачать > M10
-    how_many_bars = 99999  # сколько баров закачать <= M10
+    # how_many_bars = 70000  # сколько баров закачать > M30
+    how_many_bars = 99999  # сколько баров закачать <= M30
 
     utc_till = datetime.datetime.now() + datetime.timedelta(days=1)  # получим данные по завтрашний день
     print(utc_till)
