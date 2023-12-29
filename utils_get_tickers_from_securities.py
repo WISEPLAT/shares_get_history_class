@@ -19,16 +19,16 @@ if __name__ == '__main__':
     all_securities = {}
     all_securities_usa = {}
     all_securities_rus = {}
-    all_securities_chi = {}
+    all_securities_hkd = {}
     for sec_info in securities["securities"]:
         all_securities[sec_info["code"]] = sec_info
         if sec_info['board'] == "MCT": all_securities_usa[sec_info["code"]] = sec_info
         if sec_info['board'] == "TQBR": all_securities_rus[sec_info["code"]] = sec_info
-        if sec_info['board'] == "SPFEQ": all_securities_chi[sec_info["code"]] = sec_info
+        if sec_info['board'] == "SPFEQ": all_securities_hkd[sec_info["code"]] = sec_info
 
     # print(all_securities)
     # print(all_securities_usa)
     # print(all_securities_rus)
-    # print(all_securities_chi)
+    # print(all_securities_hkd)
 
-    print(list(all_securities_rus))
+    print(list(all_securities_hkd))
