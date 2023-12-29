@@ -25,14 +25,35 @@ def main():
     tickers = ["VTBR", "GMKN", "SBER", "LKOH", "GAZP", "CHMF", "AFLT", "PLZL"]
     # tickers = {"ALLFUTRTSI"}  # только через Финам ..
 
-    tickers = ['ABIO', 'AFKS', 'AFLT', 'AGRO', 'AKRN', 'ALRS', 'APTK', 'AQUA', 'BANEP', 'BELU', 'BSPB', 'CBOM', 'CHMF',
-     'CHMK', 'CIAN', 'DVEC', 'ELFV', 'ENPG', 'ETLN', 'FEES', 'FESH', 'FIVE', 'FIXP', 'FLOT', 'GAZP', 'GEMC', 'GLTR',
-     'GMKN', 'HHRU', 'HYDR', 'IRAO', 'KAZT', 'KZOS', 'KZOSP', 'LENT', 'LKOH', 'LSNGP', 'LSRG', 'MAGN', 'MDMG', 'MGNT',
-     'MGTSP', 'MOEX', 'MRKC', 'MRKP', 'MRKU', 'MRKV', 'MRKZ', 'MSNG', 'MSRS', 'MTLR', 'MTLRP', 'MTSS', 'MVID', 'NKHP',
-     'NKNC', 'NKNCP', 'NLMK', 'NVTK', 'OGKB', 'OKEY', 'OZON', 'PHOR', 'PIKK', 'PLZL', 'POLY', 'POSI', 'QIWI', 'RASP',
-     'RENI', 'RKKE', 'RNFT', 'ROSN', 'RTKM', 'RTKMP', 'RUAL', 'SBER', 'SBERP', 'SELG', 'SFIN', 'SGZH', 'SMLT', 'SNGS',
-     'SNGSP', 'SPBE', 'SVAV', 'TATN', 'TATNP', 'TCSG', 'TGKA', 'TGKB', 'TRNFP', 'TTLK', 'UPRO', 'VKCO', 'VSMO', 'VTBR',
-     'WUSH', 'YNDX']
+    # tickers = ['ABIO', 'AFKS', 'AFLT', 'AGRO', 'AKRN', 'ALRS', 'APTK', 'AQUA', 'BANEP', 'BELU', 'BSPB', 'CBOM', 'CHMF',
+    #  'CHMK', 'CIAN', 'DVEC', 'ELFV', 'ENPG', 'ETLN', 'FEES', 'FESH', 'FIVE', 'FIXP', 'FLOT', 'GAZP', 'GEMC', 'GLTR',
+    #  'GMKN', 'HHRU', 'HYDR', 'IRAO', 'KAZT', 'KZOS', 'KZOSP', 'LENT', 'LKOH', 'LSNGP', 'LSRG', 'MAGN', 'MDMG', 'MGNT',
+    #  'MGTSP', 'MOEX', 'MRKC', 'MRKP', 'MRKU', 'MRKV', 'MRKZ', 'MSNG', 'MSRS', 'MTLR', 'MTLRP', 'MTSS', 'MVID', 'NKHP',
+    #  'NKNC', 'NKNCP', 'NLMK', 'NVTK', 'OGKB', 'OKEY', 'OZON', 'PHOR', 'PIKK', 'PLZL', 'POLY', 'POSI', 'QIWI', 'RASP',
+    #  'RENI', 'RKKE', 'RNFT', 'ROSN', 'RTKM', 'RTKMP', 'RUAL', 'SBER', 'SBERP', 'SELG', 'SFIN', 'SGZH', 'SMLT', 'SNGS',
+    #  'SNGSP', 'SPBE', 'SVAV', 'TATN', 'TATNP', 'TCSG', 'TGKA', 'TGKB', 'TRNFP', 'TTLK', 'UPRO', 'VKCO', 'VSMO', 'VTBR',
+    #  'WUSH', 'YNDX']
+
+    tickers = ['ABIO', 'ABRD', 'ACKO', 'AFKS', 'AFLT', 'AGRO', 'AKRN', 'ALRS', 'AMEZ', 'APTK', 'AQUA', 'ARSA', 'ASSB',
+               'ASTR', 'AVAN', 'BANE', 'BANEP', 'BELU', 'BISVP', 'BLNG', 'BRZL', 'BSPB', 'BSPBP', 'CARM', 'CBOM',
+               'CHGZ', 'CHKZ', 'CHMF', 'CHMK', 'CIAN', 'CNTL', 'CNTLP', 'DIOD', 'DSKY', 'DVEC', 'DZRD', 'DZRDP', 'EELT',
+               'ELFV', 'ENPG', 'ETLN', 'EUTR', 'FEES', 'FESH', 'FIVE', 'FIXP', 'FLOT', 'GAZA', 'GAZAP', 'GAZC', 'GAZP',
+               'GAZS', 'GAZT', 'GCHE', 'GECO', 'GEMA', 'GEMC', 'GLTR', 'GMKN', 'GTRK', 'HHRU', 'HIMCP', 'HMSG', 'HNFG',
+               'HYDR', 'IGST', 'IGSTP', 'INGR', 'IRAO', 'IRKT', 'JNOS', 'JNOSP', 'KAZT', 'KAZTP', 'KBSB', 'KCHE',
+               'KCHEP', 'KGKC', 'KGKCP', 'KLSB', 'KMAZ', 'KMEZ', 'KOGK', 'KRKN', 'KRKNP', 'KRKOP', 'KROT', 'KROTP',
+               'KRSB', 'KRSBP', 'KTSB', 'KTSBP', 'KUBE', 'KUZB', 'KZOS', 'KZOSP', 'LENT', 'LIFE', 'LKOH', 'LNZL',
+               'LNZLP', 'LSNG', 'LSNGP', 'LSRG', 'LVHK', 'MAGE', 'MAGEP', 'MAGN', 'MDMG', 'MFGS', 'MFGSP', 'MGNT',
+               'MGNZ', 'MGTS', 'MGTSP', 'MISB', 'MISBP', 'MOEX', 'MRKC', 'MRKK', 'MRKP', 'MRKS', 'MRKU', 'MRKV', 'MRKY',
+               'MRKZ', 'MRSB', 'MSNG', 'MSRS', 'MSTT', 'MTLR', 'MTLRP', 'MTSS', 'MVID', 'NAUK', 'NFAZ', 'NKHP', 'NKNC',
+               'NKNCP', 'NKSH', 'NLMK', 'NMTP', 'NNSB', 'NNSBP', 'NSVZ', 'NVTK', 'OGKB', 'OKEY', 'OMZZP', 'OZON',
+               'PAZA', 'PHOR', 'PIKK', 'PLZL', 'PMSB', 'PMSBP', 'POLY', 'POSI', 'PRFN', 'PRMB', 'QIWI', 'RASP', 'RBCM',
+               'RDRB', 'RENI', 'RGSS', 'RKKE', 'RNFT', 'ROLO', 'ROSB', 'ROSN', 'ROST', 'RTGZ', 'RTKM', 'RTKMP', 'RTSB',
+               'RTSBP', 'RUAL', 'RUSI', 'RZSB', 'SAGO', 'SAGOP', 'SARE', 'SAREP', 'SBER', 'SBERP', 'SELG', 'SFIN',
+               'SGZH', 'SIBN', 'SLEN', 'SMLT', 'SNGS', 'SNGSP', 'SOFL', 'SPBE', 'STSB', 'STSBP', 'SVAV', 'SVCB', 'SVET',
+               'TASB', 'TASBP', 'TATN', 'TATNP', 'TCSG', 'TGKA', 'TGKB', 'TGKBP', 'TGKN', 'TNSE', 'TORS', 'TORSP',
+               'TRMK', 'TRNFP', 'TTLK', 'TUZA', 'UGLD', 'UKUZ', 'UNAC', 'UNKL', 'UPRO', 'URKZ', 'USBN', 'UTAR',
+               'VEON-RX', 'VGSB', 'VGSBP', 'VJGZ', 'VJGZP', 'VKCO', 'VLHZ', 'VRSB', 'VRSBP', 'VSMO', 'VSYD', 'VSYDP',
+               'VTBR', 'WTCM', 'WTCMP', 'WUSH', 'YAKG', 'YKEN', 'YKENP', 'YNDX', 'YRSB', 'YRSBP', 'ZILL', 'ZVEZ']
 
     # cant_load_tickers:
 
