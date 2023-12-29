@@ -94,7 +94,7 @@ class SharesDataLoader():
         #print(dataframe.dtypes)
         return dataframe
 
-    def export_to_csv_from_df(self, ticket, timeframe, data, export_dir):
+    def export_to_csv_from_df(self, ticket, timeframe, data, export_dir, by_timeframes=False):
         _timeframe = "D1"
         if timeframe == mt5.TIMEFRAME_MN1:  _timeframe = "MN1"
         if timeframe == mt5.TIMEFRAME_W1:   _timeframe = "W1"
@@ -113,6 +113,9 @@ class SharesDataLoader():
         data.rename(columns={"time": "datetime", "real_volume": "volume"}, inplace=True)
 
         if not os.path.exists(export_dir): os.makedirs(export_dir)
+        if by_timeframes:
+            export_dir = os.path.join(export_dir, _timeframe)
+            if not os.path.exists(export_dir): os.makedirs(export_dir)
         data.to_csv(os.path.join(export_dir, ticket+"_"+_timeframe+".csv"), index=False, encoding='utf-8')
 
     def export_to_csv(self, ticket, timeframe, how_many_bars, export_dir):
