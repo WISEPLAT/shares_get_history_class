@@ -76,6 +76,7 @@ class SharesDataLoader():
         if timeframe == mt5.TIMEFRAME_H1:   timeframe = "H1"
         if timeframe == mt5.TIMEFRAME_M30:  timeframe = "M30"
         if timeframe == mt5.TIMEFRAME_M15:  timeframe = "M15"
+        if timeframe == mt5.TIMEFRAME_M10:  timeframe = "M10"
         if timeframe == mt5.TIMEFRAME_M5:   timeframe = "M5"
         if timeframe == mt5.TIMEFRAME_M1:   timeframe = "M1"
 
@@ -93,13 +94,14 @@ class SharesDataLoader():
 
     def export_to_csv_from_df(self, ticket, timeframe, data, export_dir):
         _timeframe = "D1"
-        if timeframe == mt5.TIMEFRAME_MN1:   _timeframe = "MN1"
+        if timeframe == mt5.TIMEFRAME_MN1:  _timeframe = "MN1"
         if timeframe == mt5.TIMEFRAME_W1:   _timeframe = "W1"
         if timeframe == mt5.TIMEFRAME_D1:   _timeframe = "D1"
         if timeframe == mt5.TIMEFRAME_H4:   _timeframe = "H4"
         if timeframe == mt5.TIMEFRAME_H1:   _timeframe = "H1"
         if timeframe == mt5.TIMEFRAME_M30:  _timeframe = "M30"
         if timeframe == mt5.TIMEFRAME_M15:  _timeframe = "M15"
+        if timeframe == mt5.TIMEFRAME_M10:  _timeframe = "M10"
         if timeframe == mt5.TIMEFRAME_M5:   _timeframe = "M5"
         if timeframe == mt5.TIMEFRAME_M1:   _timeframe = "M1"
 
@@ -120,6 +122,7 @@ class SharesDataLoader():
         if timeframe == mt5.TIMEFRAME_H1:   _timeframe = "H1"
         if timeframe == mt5.TIMEFRAME_M30:  _timeframe = "M30"
         if timeframe == mt5.TIMEFRAME_M15:  _timeframe = "M15"
+        if timeframe == mt5.TIMEFRAME_M10:  _timeframe = "M10"
         if timeframe == mt5.TIMEFRAME_M5:   _timeframe = "M5"
         if timeframe == mt5.TIMEFRAME_M1:   _timeframe = "M1"
 
@@ -145,6 +148,7 @@ class SharesDataLoader():
         if timeframe == mt5.TIMEFRAME_H1:   time_in_seconds_bar = 3600  # 60*60
         if timeframe == mt5.TIMEFRAME_M30:  time_in_seconds_bar = 1800  # 60*30
         if timeframe == mt5.TIMEFRAME_M15:  time_in_seconds_bar = 900  # 60*15
+        if timeframe == mt5.TIMEFRAME_M10:  time_in_seconds_bar = 600  # 60*10
         if timeframe == mt5.TIMEFRAME_M5:   time_in_seconds_bar = 300  # 60*5
         if timeframe == mt5.TIMEFRAME_M1:   time_in_seconds_bar = 60  # 60
 
@@ -155,6 +159,7 @@ class SharesDataLoader():
         if timeframe == mt5.TIMEFRAME_H1:   _timeframe = "H1"
         if timeframe == mt5.TIMEFRAME_M30:  _timeframe = "M30"
         if timeframe == mt5.TIMEFRAME_M15:  _timeframe = "M15"
+        if timeframe == mt5.TIMEFRAME_M10:  _timeframe = "M10"
         if timeframe == mt5.TIMEFRAME_M5:   _timeframe = "M5"
         if timeframe == mt5.TIMEFRAME_M1:   _timeframe = "M1"
 
