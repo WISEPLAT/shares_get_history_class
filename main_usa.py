@@ -13,12 +13,15 @@ pd.set_option('display.width', 1500)      # макс. ширина таблиц�
 
 def main():
     current_dir = os.path.dirname(os.path.abspath(__file__))  # текущая директория
-    how_many_bars = 70000  # сколько баров закачать
+    # how_many_bars = 70000  # сколько баров закачать > M10
+    how_many_bars = 99999  # сколько баров закачать <= M10
 
     utc_till = datetime.datetime.now() + datetime.timedelta(days=1)  # получим данные по завтрашний день
     print(utc_till)
 
-    timeframes = {mt5.TIMEFRAME_M5, mt5.TIMEFRAME_M10, mt5.TIMEFRAME_M15, mt5.TIMEFRAME_M30, mt5.TIMEFRAME_H1, mt5.TIMEFRAME_H4, mt5.TIMEFRAME_D1, mt5.TIMEFRAME_W1, mt5.TIMEFRAME_MN1}
+    # timeframes = {mt5.TIMEFRAME_M5, mt5.TIMEFRAME_M10, mt5.TIMEFRAME_M15, mt5.TIMEFRAME_M30, mt5.TIMEFRAME_H1, mt5.TIMEFRAME_H4, mt5.TIMEFRAME_D1, mt5.TIMEFRAME_W1, mt5.TIMEFRAME_MN1}
+    # timeframes = {mt5.TIMEFRAME_H1, mt5.TIMEFRAME_H4, mt5.TIMEFRAME_D1, mt5.TIMEFRAME_W1, mt5.TIMEFRAME_MN1}  # 70000
+    timeframes = {mt5.TIMEFRAME_M5, mt5.TIMEFRAME_M10, mt5.TIMEFRAME_M15, mt5.TIMEFRAME_M30}  # 99999
     # timeframes = {mt5.TIMEFRAME_D1, }
     tickers = {"MSFT.US", "BAC.US"}
     # tickers = {"ALLFUTRTSI"}  # только через Финам ..
