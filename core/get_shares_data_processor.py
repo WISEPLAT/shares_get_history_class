@@ -71,6 +71,8 @@ class SharesDataLoader():
         return rates_frame
 
     def get_share_data_from_db(self, ticket, timeframe, how_many_bars):
+        if timeframe == mt5.TIMEFRAME_MN1:  timeframe = "MN1"
+        if timeframe == mt5.TIMEFRAME_W1:   timeframe = "W1"
         if timeframe == mt5.TIMEFRAME_D1:   timeframe = "D1"
         if timeframe == mt5.TIMEFRAME_H4:   timeframe = "H4"
         if timeframe == mt5.TIMEFRAME_H1:   timeframe = "H1"
