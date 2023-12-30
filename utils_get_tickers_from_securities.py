@@ -24,7 +24,7 @@ if __name__ == '__main__':
         all_securities[sec_info["code"]] = sec_info
         if sec_info['board'] == "MCT": all_securities_usa[sec_info["code"]] = sec_info
         if sec_info['board'] == "TQBR": all_securities_rus[sec_info["code"]] = sec_info
-        if sec_info['board'] == "SPFEQ": all_securities_hkd[sec_info["code"]] = sec_info
+        if sec_info['board'] == "SPFEQ": all_securities_hkd[f'{sec_info["code"]}.SPB'] = sec_info
 
     # print(all_securities)
     # print(all_securities_usa)
