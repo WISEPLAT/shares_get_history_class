@@ -40,6 +40,7 @@ def func_extra(name, _df, _func, _periods, _periods2=None, _return=None, _return
             for i in range(_return):
                 _field = f"{name}_{_period}_{_period*_mult}_{_return_names[i]}"
                 if _return == 3: _field = f"{name}_{_period}_{_period*_mult}_{int(_period/2)}_{_return_names[i]}"
+                if _return == 3 and not _periods2: _field = f"{name}_{_period}_{_return_names[i]}"
                 _df_func[_field] = _temp_df[_return_names[i]]
                 _df_func[_field] = _df_func[_field].astype(float).round(2)
 
@@ -124,8 +125,12 @@ if __name__ == '__main__':
                     # _extra = func_extra(name="dx", _df=df0, _func=abstract.DX, _periods=_periods)
                     # df = pd.concat([df, _extra], axis=1)
 
-                    # MACD - Moving Average Convergence/Divergence # input == 3, output == N
-                    _extra = func_extra(name="macd", _df=df0, _func=abstract.MACD, _periods=_periods, _periods2=3, _return=3, _return_names=["macd", "macdsignal", "macdhist"])
+                    # # MACD - Moving Average Convergence/Divergence # input == 3, output == N
+                    # _extra = func_extra(name="macd", _df=df0, _func=abstract.MACD, _periods=_periods, _periods2=3, _return=3, _return_names=["macd", "macdsignal", "macdhist"])
+                    # df = pd.concat([df, _extra], axis=1)
+
+                    # MACDFIX - Moving Average Convergence/Divergence Fix 12/26 # input == 1, output == N
+                    _extra = func_extra(name="macdfix", _df=df0, _func=abstract.MACDFIX, _periods=_periods, _return=3, _return_names=["macd", "macdsignal", "macdhist"])
                     df = pd.concat([df, _extra], axis=1)
 
                     # --------------- Momentum Indicator Functions ---------------
