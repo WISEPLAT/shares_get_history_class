@@ -32,6 +32,9 @@ def func_extra(name, _df, _func, _periods, _periods2=None, _return=None, _return
         elif name in ["macd", ]:  # _periods2 == 3:
             _f = _func(_df, fastperiod=_period, slowperiod=_period*_mult, signalperiod=int(_period/2))
             _field = f"{name}_{_period}_{_period*_mult}_{int(_period/2)}"
+        elif name in ["bbands", ]:  # _periods2 == 3:
+            _f = _func(_df, timeperiod=_period, nbdevup=2, nbdevdn=2, matype=0)
+            _field = f"{name}_{_period}_{_period*_mult}_{int(_period/2)}"
         elif name in ["stoch", ]:
             _f = _func(_df, fastk_period=_period, slowk_period=_period*_mult, slowk_matype=0, slowd_period=int(_period/2), slowd_matype=0, )
             _field = f"{name}_{_period}_{_period*_mult}_{int(_period/2)}"
@@ -44,6 +47,9 @@ def func_extra(name, _df, _func, _periods, _periods2=None, _return=None, _return
         elif name in ["ultosc", ]:
             _f = _func(_df, timeperiod1=_period, timeperiod2=_period*_mult, timeperiod3=_period*_mult2)
             _field = f"{name}_{_period}_{_period*_mult}_{_period*_mult2}"
+        elif name in ["mama", ]:
+            _f = _func(_df, fastlimit=0, slowlimit=0)
+            _field = f"{name}_{_period}_{_period*_mult}"
 
         if not _return:
             _df_func[_field] = _f
@@ -86,16 +92,68 @@ if __name__ == '__main__':
 
                     # --------------- Overlap Studies Functions ---------------
 
-                    # DEMA - Double Exponential Moving Average # input == df, output == 1
-                    _extra = func_extra(name="dema", _df=df0, _func=abstract.DEMA, _periods=_periods)
+                    # # BBANDS - Bollinger Bands # input == 3, output == N
+                    # _extra = func_extra(name="bbands", _df=df0, _func=abstract.BBANDS, _periods=_periods, _return=3, _return_names=["upperband", "middleband", "lowerband"])
+                    # df = pd.concat([df, _extra], axis=1)
+
+                    # # DEMA - Double Exponential Moving Average # input == 1, output == 1
+                    # _extra = func_extra(name="dema", _df=df0, _func=abstract.DEMA, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # EMA - Exponential Moving Average # input == 1, output == 1
+                    # _extra = func_extra(name="ema", _df=df0, _func=abstract.EMA, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+
+                    # # HT_TRENDLINE - Hilbert Transform - Instantaneous Trendline # input == df, output == 1
+                    # _extra = func_extra(name="ht_trendline", _df=df0, _func=abstract.HT_TRENDLINE, _periods=[])
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # KAMA - Kaufman Adaptive Moving Average # input == 1, output == 1
+                    # _extra = func_extra(name="kama", _df=df0, _func=abstract.KAMA, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # MA - Moving average # input == 1, output == 1
+                    # _extra = func_extra(name="ma", _df=df0, _func=abstract.MA, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+
+                    # # MAMA - MESA Adaptive Moving Average # input == df, output == N
+                    # _extra = func_extra(name="mama", _df=df0, _func=abstract.MAMA, _periods=[], _return=2, _return_names=["mama", "fama"])
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # MIDPOINT - MidPoint over period # input == 1, output == 1
+                    # _extra = func_extra(name="midpoint", _df=df0, _func=abstract.MIDPOINT, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # MIDPRICE - Midpoint Price over period # input == 1, output == 1
+                    # _extra = func_extra(name="midprice", _df=df0, _func=abstract.MIDPRICE, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+
+                    # # SAR - Parabolic SAR # input == df, output == 1
+                    # _extra = func_extra(name="sar", _df=df0, _func=abstract.SAR, _periods=[])
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # SAREXT - Parabolic SAR - Extended # input == df, output == 1
+                    # _extra = func_extra(name="sarext", _df=df0, _func=abstract.SAREXT, _periods=[])
+                    # df = pd.concat([df, _extra], axis=1)
+
+                    # # SMA - Simple Moving Average # input == 1, output == 1
+                    # _extra = func_extra(name="sma", _df=df0, _func=abstract.SMA, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+
+                    # T3 - Triple Exponential Moving Average (T3) # input == 1, output == 1
+                    _extra = func_extra(name="t3", _df=df0, _func=abstract.T3, _periods=_periods)
                     df = pd.concat([df, _extra], axis=1)
 
-                    # EMA - Exponential Moving Average # input == df, output == 1
-                    _extra = func_extra(name="ema", _df=df0, _func=abstract.EMA, _periods=_periods)
+                    # TEMA - Triple Exponential Moving Average # input == 1, output == 1
+                    _extra = func_extra(name="tema", _df=df0, _func=abstract.TEMA, _periods=_periods)
                     df = pd.concat([df, _extra], axis=1)
 
-                    # SMA - Simple Moving Average # input == df, output == 1
-                    _extra = func_extra(name="sma", _df=df0, _func=abstract.SMA, _periods=_periods)
+                    # TRIMA - Triangular Moving Average # input == 1, output == 1
+                    _extra = func_extra(name="trima", _df=df0, _func=abstract.TRIMA, _periods=_periods)
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # WMA - Weighted Moving Average # input == 1, output == 1
+                    _extra = func_extra(name="wma", _df=df0, _func=abstract.WMA, _periods=_periods)
                     df = pd.concat([df, _extra], axis=1)
 
                     # --------------- Overlap Studies Functions ---------------
