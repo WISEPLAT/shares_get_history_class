@@ -25,7 +25,7 @@ def func_extra(name, _df, _func, _periods, _periods2=None, _return=None, _return
         if not _periods2:
             _f = _func(_df, timeperiod=_period)
             _field = f"{name}_{_period}"
-        elif name in ["apo", ]:  #_periods2 == 2:
+        elif name in ["apo", "ppo", ]:  # _periods2 == 2:
             _f = _func(_df, fastperiod=_period, slowperiod=_period*_mult)
             _field = f"{name}_{_period}_{_period*_mult}"
         elif name in ["macd", ]:  # _periods2 == 3:
@@ -137,17 +137,49 @@ if __name__ == '__main__':
                     # _extra = func_extra(name="mfi", _df=df0, _func=abstract.MFI, _periods=_periods)
                     # df = pd.concat([df, _extra], axis=1)
 
-                    # MINUS_DI - Minus Directional Indicator # input == 1, output == 1
-                    _extra = func_extra(name="minus_di", _df=df0, _func=abstract.MINUS_DI, _periods=_periods)
-                    df = pd.concat([df, _extra], axis=1)
+                    # # MINUS_DI - Minus Directional Indicator # input == 1, output == 1
+                    # _extra = func_extra(name="minus_di", _df=df0, _func=abstract.MINUS_DI, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # MINUS_DM - Minus Directional Movement # input == 1, output == 1
+                    # _extra = func_extra(name="minus_dm", _df=df0, _func=abstract.MINUS_DM, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # MOM - Momentum # input == 1, output == 1
+                    # _extra = func_extra(name="mom", _df=df0, _func=abstract.MOM, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
 
-                    # MINUS_DM - Minus Directional Movement # input == 1, output == 1
-                    _extra = func_extra(name="minus_dm", _df=df0, _func=abstract.MINUS_DM, _periods=_periods)
-                    df = pd.concat([df, _extra], axis=1)
+                    # # PLUS_DI - Plus Directional Indicator # input == 1, output == 1
+                    # _extra = func_extra(name="plus_di", _df=df0, _func=abstract.PLUS_DI, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # PLUS_DM - Plus Directional Movement # input == 1, output == 1
+                    # _extra = func_extra(name="plus_dm", _df=df0, _func=abstract.PLUS_DM, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
 
-                    # MOM - Momentum # input == 1, output == 1
-                    _extra = func_extra(name="mom", _df=df0, _func=abstract.MOM, _periods=_periods)
-                    df = pd.concat([df, _extra], axis=1)
+                    # # PPO - Percentage Price Oscillator # input == 2, output == 1
+                    # _extra = func_extra(name="ppo", _df=df0, _func=abstract.PPO, _periods=_periods, _periods2=2)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # ROC - Rate of change : ((price/prevPrice)-1)*100 # input == 1, output == 1
+                    # _extra = func_extra(name="roc", _df=df0, _func=abstract.ROC, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # ROCP - Rate of change Percentage: (price-prevPrice)/prevPrice # input == 1, output == 1
+                    # _extra = func_extra(name="rocp", _df=df0, _func=abstract.ROCP, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # ROCR - Rate of change ratio: (price/prevPrice) # input == 1, output == 1
+                    # _extra = func_extra(name="rocr", _df=df0, _func=abstract.ROCR, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # ROCR100 - Rate of change ratio 100 scale: (price/prevPrice)*100 # input == 1, output == 1
+                    # _extra = func_extra(name="rocr100", _df=df0, _func=abstract.ROCR100, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+
+                    # # RSI - Relative Strength Index # input == 1, output == 1
+                    # _extra = func_extra(name="rsi", _df=df0, _func=abstract.RSI, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
 
                     # --------------- Momentum Indicator Functions ---------------
 
