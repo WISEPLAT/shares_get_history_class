@@ -19,6 +19,7 @@ def export_to_csv_from_df(ticker, timeframe, data, export_dir, by_timeframes=Fal
 def func_extra(name, _df, _func, _periods, _periods2=None, _return=None, _return_names=None):
     _df_func = pd.DataFrame()
     _mult = 2
+    if not _periods: _periods = ["0", ]
     for _period in _periods:
 
         if not _periods2:
@@ -87,18 +88,25 @@ if __name__ == '__main__':
                     # _extra = func_extra(name="adx", _df=df0, _func=abstract.ADX, _periods=_periods)
                     # df = pd.concat([df, _extra], axis=1)
 
-                    # # ADXR - Average Directional Movement Index Rating
+                    # # ADXR - Average Directional Movement Index Rating # input == 1, output == 1
                     # _extra = func_extra(name="adxr", _df=df0, _func=abstract.ADXR, _periods=_periods)
                     # df = pd.concat([df, _extra], axis=1)
 
-                    # # APO - Absolute Price Oscillator
+                    # # APO - Absolute Price Oscillator # input == 2, output == 1
                     # _extra = func_extra(name="apo", _df=df0, _func=abstract.APO, _periods=_periods, _periods2=2)
                     # df = pd.concat([df, _extra], axis=1)
 
-                    # AROON - Aroon
-                    _extra = func_extra(name="aroon", _df=df0, _func=abstract.AROON, _periods=_periods, _return=2, _return_names=["aroondown", "aroonup"])
-                    df = pd.concat([df, _extra], axis=1)
+                    # # AROON - Aroon # input == 1, output == N
+                    # _extra = func_extra(name="aroon", _df=df0, _func=abstract.AROON, _periods=_periods, _return=2, _return_names=["aroondown", "aroonup"])
+                    # df = pd.concat([df, _extra], axis=1)
 
+                    # # AROONOSC - Aroon Oscillator # input == 1, output == 1
+                    # _extra = func_extra(name="aroonosc", _df=df0, _func=abstract.AROONOSC, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+
+                    # BOP - Balance Of Power # input == df, output == 1
+                    _extra = func_extra(name="bop", _df=df0, _func=abstract.BOP, _periods=[])
+                    df = pd.concat([df, _extra], axis=1)
 
                     # --------------- Momentum Indicator Functions ---------------
 
