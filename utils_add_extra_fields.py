@@ -16,11 +16,14 @@ def export_to_csv_from_df(ticker, timeframe, data, export_dir, by_timeframes=Fal
     data.to_csv(os.path.join(export_dir, ticker+"_"+timeframe+".csv"), index=False, encoding='utf-8')
 
 
-def func_extra(name, _df, _func, _periods):
+def func_extra(name, _df, _func, _periods, _periods2=None):
     _df_func = pd.DataFrame()
+    _mult = 2
     for _period in _periods:
         _f = _func(_df, timeperiod=_period)
+        if _periods2: _f = _func(_df, fastperiod=_period, slowperiod=_period*_mult)
         _field = f"{name}_{_period}"
+        if _periods2: _field = f"{name}_{_period}_{_period*_mult}"
         _df_func[_field] = _f
         _df_func[_field] = _df_func[_field].astype(float).round(2)
     return _df_func
@@ -65,6 +68,23 @@ if __name__ == '__main__':
                     # ATR
                     _extra = func_extra(name="atr", _df=df0, _func=abstract.ATR, _periods=_periods)
                     df = pd.concat([df, _extra], axis=1)
+
+                    # --------------- Momentum Indicator Functions ---------------
+
+                    # ADX - Average Directional Movement Index
+                    _extra = func_extra(name="adx", _df=df0, _func=abstract.ADX, _periods=_periods)
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # ADXR - Average Directional Movement Index Rating
+                    _extra = func_extra(name="adxr", _df=df0, _func=abstract.ADXR, _periods=_periods)
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # APO - Absolute Price Oscillator
+                    _extra = func_extra(name="apo", _df=df0, _func=abstract.APO, _periods=_periods, _periods2=2)
+                    df = pd.concat([df, _extra], axis=1)
+
+
+                    # --------------- Momentum Indicator Functions ---------------
 
                     data = df
 
