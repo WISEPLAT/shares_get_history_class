@@ -25,9 +25,12 @@ def func_extra(name, _df, _func, _periods, _periods2=None, _return=None, _return
         if not _periods2:
             _f = _func(_df, timeperiod=_period)
             _field = f"{name}_{_period}"
-        else:
+        elif name in ["apo", ]:  #_periods2 == 2:
             _f = _func(_df, fastperiod=_period, slowperiod=_period*_mult)
             _field = f"{name}_{_period}_{_period*_mult}"
+        elif name in ["macd", ]:  # _periods2 == 3:
+            _f = _func(_df, fastperiod=_period, slowperiod=_period*_mult, signalperiod=int(_period/2))
+            _field = f"{name}_{_period}_{_period*_mult}_{int(_period/2)}"
 
         if not _return:
             _df_func[_field] = _f
@@ -35,7 +38,8 @@ def func_extra(name, _df, _func, _periods, _periods2=None, _return=None, _return
         elif _return > 1:
             _temp_df = _f
             for i in range(_return):
-                _field = f"{name}_{_period}_{_return_names[i]}"
+                _field = f"{name}_{_period}_{_period*_mult}_{_return_names[i]}"
+                if _return == 3: _field = f"{name}_{_period}_{_period*_mult}_{int(_period/2)}_{_return_names[i]}"
                 _df_func[_field] = _temp_df[_return_names[i]]
                 _df_func[_field] = _df_func[_field].astype(float).round(2)
 
@@ -119,6 +123,10 @@ if __name__ == '__main__':
                     # # DX - Directional Movement Index # input == 1, output == 1
                     # _extra = func_extra(name="dx", _df=df0, _func=abstract.DX, _periods=_periods)
                     # df = pd.concat([df, _extra], axis=1)
+
+                    # MACD - Moving Average Convergence/Divergence # input == 3, output == N
+                    _extra = func_extra(name="macd", _df=df0, _func=abstract.MACD, _periods=_periods, _periods2=3, _return=3, _return_names=["macd", "macdsignal", "macdhist"])
+                    df = pd.concat([df, _extra], axis=1)
 
                     # --------------- Momentum Indicator Functions ---------------
 
