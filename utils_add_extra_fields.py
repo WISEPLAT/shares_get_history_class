@@ -104,9 +104,21 @@ if __name__ == '__main__':
                     # _extra = func_extra(name="aroonosc", _df=df0, _func=abstract.AROONOSC, _periods=_periods)
                     # df = pd.concat([df, _extra], axis=1)
 
-                    # BOP - Balance Of Power # input == df, output == 1
-                    _extra = func_extra(name="bop", _df=df0, _func=abstract.BOP, _periods=[])
-                    df = pd.concat([df, _extra], axis=1)
+                    # # BOP - Balance Of Power # input == df, output == 1
+                    # _extra = func_extra(name="bop", _df=df0, _func=abstract.BOP, _periods=[])
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # CCI - Commodity Channel Index # input == 1, output == 1
+                    # _extra = func_extra(name="cci", _df=df0, _func=abstract.CCI, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # CMO - Chande Momentum Oscillator # input == 1, output == 1
+                    # _extra = func_extra(name="cmo", _df=df0, _func=abstract.CMO, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # DX - Directional Movement Index # input == 1, output == 1
+                    # _extra = func_extra(name="dx", _df=df0, _func=abstract.DX, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
 
                     # --------------- Momentum Indicator Functions ---------------
 
