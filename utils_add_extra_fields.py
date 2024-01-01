@@ -1,6 +1,8 @@
 # pip install TA_Lib-0.4.24-cp39-cp39-win_amd64.whl
 # pip install pandas
 
+# exit(1)  # to prevent run
+
 import os
 import pandas as pd
 
@@ -67,7 +69,9 @@ def func_extra(name, _df, _func, _periods, _periods2=None, _return=None, _return
 
 
 if __name__ == '__main__':
-    timeframes = ["MN1", "W1", "D1", "H4", "H1", "M30", "M15", "M10", "M5"]
+    # timeframes = ["MN1", "W1", "D1", "H4", "H1", "M30", "M15", "M10", "M5"]
+    timeframes = ["MN1", "W1", "D1", ]
+    # timeframes = ["H4", "H1", ]
 
     csv_folders = ["csv_export_usa", "csv_export_rus"]
     csv_folders_appendix = "_extra"
@@ -76,6 +80,7 @@ if __name__ == '__main__':
 
     for csv_folder in csv_folders:
         for timeframe in timeframes:
+            print(csv_folder, timeframe)
             _folder = os.path.join(csv_folder, timeframe)
             for f in os.listdir(_folder):
                 _filename = os.path.join(_folder, f)
@@ -88,7 +93,7 @@ if __name__ == '__main__':
 
                     # +extra fields
                     _periods = list(range(3, 11)) + list(range(12, 20, 2)) + list(range(20, 55, 5)) + list(range(60, 110, 10))
-                    print(_periods, "len:", len(_periods))  # [3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100] len: 24
+                    # print(_periods, "len:", len(_periods))  # [3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100] len: 24
 
 
                     # --------------- Overlap Studies Functions ---------------
@@ -367,4 +372,6 @@ if __name__ == '__main__':
                     export_to_csv_from_df(ticker=ticker, timeframe=timeframe, data=data,
                                           export_dir=os.path.join(current_dir, f"{csv_folder}{csv_folders_appendix}"), by_timeframes=True)
 
-                exit(1)
+                    # print(data.info())  # Columns: 1298 entries, datetime to willr_100
+
+                # exit(1)
