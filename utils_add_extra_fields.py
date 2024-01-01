@@ -84,27 +84,31 @@ if __name__ == '__main__':
                     _periods = list(range(3, 11)) + list(range(12, 20, 2)) + list(range(20, 55, 5)) + list(range(60, 110, 10))
                     print(_periods, "len:", len(_periods))  # [3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100] len: 24
 
-                    # # SMA
-                    # _extra = func_extra(name="sma", _df=df0, _func=abstract.SMA, _periods=_periods)
-                    # df = pd.concat([df, _extra], axis=1)
-                    #
-                    # # EMA
-                    # _extra = func_extra(name="ema", _df=df0, _func=abstract.EMA, _periods=_periods)
-                    # df = pd.concat([df, _extra], axis=1)
+                    # --------------- Overlap Studies Functions ---------------
+
+                    # EMA
+                    _extra = func_extra(name="ema", _df=df0, _func=abstract.EMA, _periods=_periods)
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # SMA
+                    _extra = func_extra(name="sma", _df=df0, _func=abstract.SMA, _periods=_periods)
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # --------------- Overlap Studies Functions ---------------
 
                     # --------------- Volume Indicator Functions ---------------
 
-                    # AD - Chaikin A/D Line # input == df, output == 1
-                    _extra = func_extra(name="ad", _df=df0, _func=abstract.AD, _periods=[])
-                    df = pd.concat([df, _extra], axis=1)
-
-                    # ADOSC - Chaikin A/D Oscillator # input == 2, output == 1
-                    _extra = func_extra(name="adosc", _df=df0, _func=abstract.ADOSC, _periods=_periods, _periods2=2)
-                    df = pd.concat([df, _extra], axis=1)
-
-                    # OBV - On Balance Volume # input == df, output == 1
-                    _extra = func_extra(name="obv", _df=df0, _func=abstract.OBV, _periods=[])
-                    df = pd.concat([df, _extra], axis=1)
+                    # # AD - Chaikin A/D Line # input == df, output == 1
+                    # _extra = func_extra(name="ad", _df=df0, _func=abstract.AD, _periods=[])
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # ADOSC - Chaikin A/D Oscillator # input == 2, output == 1
+                    # _extra = func_extra(name="adosc", _df=df0, _func=abstract.ADOSC, _periods=_periods, _periods2=2)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # OBV - On Balance Volume # input == df, output == 1
+                    # _extra = func_extra(name="obv", _df=df0, _func=abstract.OBV, _periods=[])
+                    # df = pd.concat([df, _extra], axis=1)
 
                     # --------------- Volume Indicator Functions ---------------
 
