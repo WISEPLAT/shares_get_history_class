@@ -26,7 +26,7 @@ def func_extra(name, _df, _func, _periods, _periods2=None, _return=None, _return
         if not _periods2:
             _f = _func(_df, timeperiod=_period)
             _field = f"{name}_{_period}"
-        elif name in ["apo", "ppo", ]:  # _periods2 == 2:
+        elif name in ["apo", "ppo", "adosc", ]:  # _periods2 == 2:
             _f = _func(_df, fastperiod=_period, slowperiod=_period*_mult)
             _field = f"{name}_{_period}_{_period*_mult}"
         elif name in ["macd", ]:  # _periods2 == 3:
@@ -91,14 +91,38 @@ if __name__ == '__main__':
                     # # EMA
                     # _extra = func_extra(name="ema", _df=df0, _func=abstract.EMA, _periods=_periods)
                     # df = pd.concat([df, _extra], axis=1)
-                    #
-                    # # ATR
+
+                    # --------------- Volume Indicator Functions ---------------
+
+                    # AD - Chaikin A/D Line # input == df, output == 1
+                    _extra = func_extra(name="ad", _df=df0, _func=abstract.AD, _periods=[])
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # ADOSC - Chaikin A/D Oscillator # input == 2, output == 1
+                    _extra = func_extra(name="adosc", _df=df0, _func=abstract.ADOSC, _periods=_periods, _periods2=2)
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # OBV - On Balance Volume # input == df, output == 1
+                    _extra = func_extra(name="obv", _df=df0, _func=abstract.OBV, _periods=[])
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # --------------- Volume Indicator Functions ---------------
+
+                    # --------------- Volatility Indicator Functions ---------------
+
+                    # # ATR - Average True Range # input == 1, output == 1
                     # _extra = func_extra(name="atr", _df=df0, _func=abstract.ATR, _periods=_periods)
                     # df = pd.concat([df, _extra], axis=1)
                     #
-                    # # ATR
-                    # _extra = func_extra(name="atr", _df=df0, _func=abstract.ATR, _periods=_periods)
+                    # # NATR - Normalized Average True Range # input == 1, output == 1
+                    # _extra = func_extra(name="natr", _df=df0, _func=abstract.NATR, _periods=_periods)
                     # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # TRANGE - True Range # input == df, output == 1
+                    # _extra = func_extra(name="trange", _df=df0, _func=abstract.TRANGE, _periods=[])
+                    # df = pd.concat([df, _extra], axis=1)
+
+                    # --------------- Volatility Indicator Functions ---------------
 
                     # --------------- Momentum Indicator Functions ---------------
 
@@ -214,9 +238,9 @@ if __name__ == '__main__':
                     # _extra = func_extra(name="ultosc", _df=df0, _func=abstract.ULTOSC, _periods=_periods, _periods2=3, )
                     # df = pd.concat([df, _extra], axis=1)
 
-                    # WILLR - Williams' %R # input == 1, output == 1
-                    _extra = func_extra(name="willr", _df=df0, _func=abstract.WILLR, _periods=_periods)
-                    df = pd.concat([df, _extra], axis=1)
+                    # # WILLR - Williams' %R # input == 1, output == 1
+                    # _extra = func_extra(name="willr", _df=df0, _func=abstract.WILLR, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
 
                     # --------------- Momentum Indicator Functions ---------------
 
