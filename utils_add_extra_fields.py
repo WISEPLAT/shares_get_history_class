@@ -16,16 +16,29 @@ def export_to_csv_from_df(ticker, timeframe, data, export_dir, by_timeframes=Fal
     data.to_csv(os.path.join(export_dir, ticker+"_"+timeframe+".csv"), index=False, encoding='utf-8')
 
 
-def func_extra(name, _df, _func, _periods, _periods2=None):
+def func_extra(name, _df, _func, _periods, _periods2=None, _return=None, _return_names=None):
     _df_func = pd.DataFrame()
     _mult = 2
     for _period in _periods:
-        _f = _func(_df, timeperiod=_period)
-        if _periods2: _f = _func(_df, fastperiod=_period, slowperiod=_period*_mult)
-        _field = f"{name}_{_period}"
-        if _periods2: _field = f"{name}_{_period}_{_period*_mult}"
-        _df_func[_field] = _f
-        _df_func[_field] = _df_func[_field].astype(float).round(2)
+
+        if not _periods2:
+            _f = _func(_df, timeperiod=_period)
+            _field = f"{name}_{_period}"
+        else:
+            _f = _func(_df, fastperiod=_period, slowperiod=_period*_mult)
+            _field = f"{name}_{_period}_{_period*_mult}"
+
+        if not _return:
+            _df_func[_field] = _f
+            _df_func[_field] = _df_func[_field].astype(float).round(2)
+        elif _return == 2:
+            _field = f"{name}_{_period}_{_return_names[0]}"
+            _field2 = f"{name}_{_period}_{_return_names[1]}"
+            _temp_df = _f
+            _df_func[_field], _df_func[_field2] = _temp_df[_return_names[0]], _temp_df[_return_names[1]]
+            _df_func[_field] = _df_func[_field].astype(float).round(2)
+            _df_func[_field2] = _df_func[_field2].astype(float).round(2)
+
     return _df_func
 
 
@@ -53,34 +66,38 @@ if __name__ == '__main__':
                     _periods = list(range(3, 11)) + list(range(12, 20, 2)) + list(range(20, 55, 5)) + list(range(60, 110, 10))
                     print(_periods, "len:", len(_periods))  # [3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100] len: 24
 
-                    # SMA
-                    _extra = func_extra(name="sma", _df=df0, _func=abstract.SMA, _periods=_periods)
-                    df = pd.concat([df, _extra], axis=1)
-
-                    # EMA
-                    _extra = func_extra(name="ema", _df=df0, _func=abstract.EMA, _periods=_periods)
-                    df = pd.concat([df, _extra], axis=1)
-
-                    # ATR
-                    _extra = func_extra(name="atr", _df=df0, _func=abstract.ATR, _periods=_periods)
-                    df = pd.concat([df, _extra], axis=1)
-
-                    # ATR
-                    _extra = func_extra(name="atr", _df=df0, _func=abstract.ATR, _periods=_periods)
-                    df = pd.concat([df, _extra], axis=1)
+                    # # SMA
+                    # _extra = func_extra(name="sma", _df=df0, _func=abstract.SMA, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # EMA
+                    # _extra = func_extra(name="ema", _df=df0, _func=abstract.EMA, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # ATR
+                    # _extra = func_extra(name="atr", _df=df0, _func=abstract.ATR, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # ATR
+                    # _extra = func_extra(name="atr", _df=df0, _func=abstract.ATR, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
 
                     # --------------- Momentum Indicator Functions ---------------
 
-                    # ADX - Average Directional Movement Index
-                    _extra = func_extra(name="adx", _df=df0, _func=abstract.ADX, _periods=_periods)
-                    df = pd.concat([df, _extra], axis=1)
+                    # # ADX - Average Directional Movement Index
+                    # _extra = func_extra(name="adx", _df=df0, _func=abstract.ADX, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
 
-                    # ADXR - Average Directional Movement Index Rating
-                    _extra = func_extra(name="adxr", _df=df0, _func=abstract.ADXR, _periods=_periods)
-                    df = pd.concat([df, _extra], axis=1)
+                    # # ADXR - Average Directional Movement Index Rating
+                    # _extra = func_extra(name="adxr", _df=df0, _func=abstract.ADXR, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
 
-                    # APO - Absolute Price Oscillator
-                    _extra = func_extra(name="apo", _df=df0, _func=abstract.APO, _periods=_periods, _periods2=2)
+                    # # APO - Absolute Price Oscillator
+                    # _extra = func_extra(name="apo", _df=df0, _func=abstract.APO, _periods=_periods, _periods2=2)
+                    # df = pd.concat([df, _extra], axis=1)
+
+                    # AROON - Aroon
+                    _extra = func_extra(name="aroon", _df=df0, _func=abstract.AROON, _periods=_periods, _return=2, _return_names=["aroondown", "aroonup"])
                     df = pd.concat([df, _extra], axis=1)
 
 
