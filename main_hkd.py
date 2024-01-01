@@ -1,32 +1,52 @@
-#pip install opencv-python mysqlclient MetaTrader5 pandas pytz
+# pip install opencv-python mysqlclient MetaTrader5 pandas pytz
 import os
 
 from core.get_shares_data_processor import SharesDataLoader
 import MetaTrader5 as mt5       # импортируем модуль для подключения к MetaTrader5
-import datetime
+import datetime, time
 from threading import Thread    # для поточной закачки разных датафреймов
 import cv2
 import pandas as pd
 pd.set_option('display.max_columns', 500) # сколько столбцов показываем
 pd.set_option('display.width', 1500)      # макс. ширина таблицы для показа
 
+import functions_thread  # to prevent hang Metatrader5
+global time_of_getting_data
 
-def main():
+
+def prevent_hang(name):
+    now = datetime.datetime.now()
+    _delta = now - time_of_getting_data
+    if _delta.seconds > 30:  # если зависло на 30 секунд, то удаляем процесс MetaTrader5
+        print(f"MetaTrader5 is hang - killing process...")
+        try: os.system("taskkill /F /IM terminal64.exe")  # run in pycharm
+        except: print("Can't kill process of MetaTrader5...")
+
+
+def get_hkd_shares(name):
+    # print(".test.")
+    # for i in range(10):
+    #     time.sleep(5)
+    #     print(".", end="")
+
     current_dir = os.path.dirname(os.path.abspath(__file__))  # текущая директория
     how_many_bars = 99999  # сколько баров закачать - предел...
 
     utc_till = datetime.datetime.now() + datetime.timedelta(days=1)  # получим данные по завтрашний день
     print(utc_till)
 
-    timeframes = {mt5.TIMEFRAME_M5, mt5.TIMEFRAME_M10, mt5.TIMEFRAME_M15, mt5.TIMEFRAME_M30, mt5.TIMEFRAME_H1, mt5.TIMEFRAME_H4, mt5.TIMEFRAME_D1, mt5.TIMEFRAME_W1, mt5.TIMEFRAME_MN1}
+    # timeframes = {mt5.TIMEFRAME_M5, mt5.TIMEFRAME_M10, mt5.TIMEFRAME_M15, mt5.TIMEFRAME_M30, mt5.TIMEFRAME_H1, mt5.TIMEFRAME_H4, mt5.TIMEFRAME_D1, mt5.TIMEFRAME_W1, mt5.TIMEFRAME_MN1}
+    timeframes = {mt5.TIMEFRAME_M5, mt5.TIMEFRAME_M10, mt5.TIMEFRAME_M15, mt5.TIMEFRAME_M30, mt5.TIMEFRAME_H4,
+                  mt5.TIMEFRAME_D1, mt5.TIMEFRAME_W1, mt5.TIMEFRAME_MN1}
     # timeframes = {mt5.TIMEFRAME_H1, mt5.TIMEFRAME_H4, mt5.TIMEFRAME_D1, mt5.TIMEFRAME_W1, mt5.TIMEFRAME_MN1}
     # timeframes = {mt5.TIMEFRAME_M5, mt5.TIMEFRAME_M10, mt5.TIMEFRAME_M15, mt5.TIMEFRAME_M30}  # 99999 - предел...
     # timeframes = {mt5.TIMEFRAME_D1, }
-    tickers = {"MSFT.US", "BAC.US"}
+    timeframes = {mt5.TIMEFRAME_W1, }
+    # tickers = {"MSFT.US", "BAC.US"}
     # tickers = {"ALLFUTRTSI"}  # только через Финам ..
 
-    tickers = ['1.SPB', '101.SPB', '1024.SPB', '1038.SPB', '1044.SPB', '1055.SPB', '1061.SPB', '1066.SPB', '1072.SPB', '1088.SPB',
-     '1093.SPB', '1099.SPB', '1109.SPB', '1113.SPB', '1138.SPB', '1171.SPB', '1177.SPB', '12.SPB', '1209.SPB',
+    tickers = ['1.SPB', '101.SPB', '1024.SPB', '1038.SPB', '1044.SPB', '1055.SPB', '1061.SPB', '1066.SPB', '1072.SPB',
+     '1088.SPB', '1093.SPB', '1099.SPB', '1109.SPB', '1113.SPB', '1138.SPB', '1171.SPB', '1177.SPB', '12.SPB', '1209.SPB',
      '1211.SPB', '1288.SPB', '1299.SPB', '1336.SPB', '1339.SPB', '1347.SPB', '1359.SPB', '1368.SPB', '1378.SPB',
      '1385.SPB', '1398.SPB', '1548.SPB', '16.SPB', '1658.SPB', '168.SPB', '175.SPB', '1766.SPB', '1797.SPB', '1801.SPB',
      '1810.SPB', '1816.SPB', '1818.SPB', '1876.SPB', '1877.SPB', '1880.SPB', '1898.SPB', '1919.SPB', '1928.SPB',
@@ -273,24 +293,28 @@ def main():
     cant_load_tickers = []
 
     for timeframe in timeframes:
-        # load_data = SharesDataLoader(share_name="")
-        # load_data.connect_to_metatrader5(path=f"C:\Program Files\FINAM MetaTrader 5\terminal64.exe")
         for ticket in tickers:
             try:
+                time_of_getting_data = datetime.datetime.now()
                 load_data = SharesDataLoader(ticket)
                 load_data.connect_to_metatrader5(path=f"C:\Program Files\FINAM MetaTrader 5\terminal64.exe")
-                # print("cant_load_tickers: ", cant_load_tickers)
-                # print("try: ", ticket)
-                data = load_data.get_share_data(ticket=ticket, timeframe=timeframe, utc_till=utc_till, how_many_bars=how_many_bars, remove_today_bars=True)
-                load_data.export_to_csv_from_df(ticket=ticket, timeframe=timeframe, data=data, export_dir=os.path.join(current_dir, "csv_export_hkd"), by_timeframes=True)
+                data = load_data.get_share_data(ticket=ticket, timeframe=timeframe, utc_till=utc_till,
+                                                how_many_bars=how_many_bars, remove_today_bars=True)
+                load_data.export_to_csv_from_df(ticket=ticket, timeframe=timeframe, data=data,
+                                                export_dir=os.path.join(current_dir, "csv_export_hkd"),
+                                                by_timeframes=True)
                 load_data.disconnect_from_metatrader5()
             except:
                 cant_load_tickers.append(ticket)
-        # load_data.disconnect_from_metatrader5()
 
     print("cant_load_tickers:", cant_load_tickers)
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    main()
+    time_of_getting_data = datetime.datetime.now()
+    # to prevent hang Metatrader5
+    work_thread = functions_thread.Periodic(10, prevent_hang, "prevent_hang", autostart=True)  # поток для периодической обработки функции # it auto-starts, no need of rt.start()
+    work_thread2 = functions_thread.RunOnce(get_hkd_shares, "get_hkd_shares", autostart=True)  # поток для однократного запуска функции # it auto-starts, no need of rt.start()
+
+    while work_thread2.is_running(): pass
+    work_thread.stop()
