@@ -133,8 +133,20 @@ if __name__ == '__main__':
                     # _extra = func_extra(name="macdfix", _df=df0, _func=abstract.MACDFIX, _periods=_periods, _return=3, _return_names=["macd", "macdsignal", "macdhist"])
                     # df = pd.concat([df, _extra], axis=1)
 
-                    # MFI - Money Flow Index # input == df, output == 1
-                    _extra = func_extra(name="mfi", _df=df0, _func=abstract.MFI, _periods=_periods)
+                    # # MFI - Money Flow Index # input == 1, output == 1
+                    # _extra = func_extra(name="mfi", _df=df0, _func=abstract.MFI, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+
+                    # MINUS_DI - Minus Directional Indicator # input == 1, output == 1
+                    _extra = func_extra(name="minus_di", _df=df0, _func=abstract.MINUS_DI, _periods=_periods)
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # MINUS_DM - Minus Directional Movement # input == 1, output == 1
+                    _extra = func_extra(name="minus_dm", _df=df0, _func=abstract.MINUS_DM, _periods=_periods)
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # MOM - Momentum # input == 1, output == 1
+                    _extra = func_extra(name="mom", _df=df0, _func=abstract.MOM, _periods=_periods)
                     df = pd.concat([df, _extra], axis=1)
 
                     # --------------- Momentum Indicator Functions ---------------
