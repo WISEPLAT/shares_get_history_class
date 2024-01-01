@@ -129,8 +129,12 @@ if __name__ == '__main__':
                     # _extra = func_extra(name="macd", _df=df0, _func=abstract.MACD, _periods=_periods, _periods2=3, _return=3, _return_names=["macd", "macdsignal", "macdhist"])
                     # df = pd.concat([df, _extra], axis=1)
 
-                    # MACDFIX - Moving Average Convergence/Divergence Fix 12/26 # input == 1, output == N
-                    _extra = func_extra(name="macdfix", _df=df0, _func=abstract.MACDFIX, _periods=_periods, _return=3, _return_names=["macd", "macdsignal", "macdhist"])
+                    # # MACDFIX - Moving Average Convergence/Divergence Fix 12/26 # input == 1, output == N
+                    # _extra = func_extra(name="macdfix", _df=df0, _func=abstract.MACDFIX, _periods=_periods, _return=3, _return_names=["macd", "macdsignal", "macdhist"])
+                    # df = pd.concat([df, _extra], axis=1)
+
+                    # MFI - Money Flow Index # input == df, output == 1
+                    _extra = func_extra(name="mfi", _df=df0, _func=abstract.MFI, _periods=_periods)
                     df = pd.concat([df, _extra], axis=1)
 
                     # --------------- Momentum Indicator Functions ---------------
