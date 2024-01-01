@@ -140,21 +140,21 @@ if __name__ == '__main__':
                     # _extra = func_extra(name="sma", _df=df0, _func=abstract.SMA, _periods=_periods)
                     # df = pd.concat([df, _extra], axis=1)
 
-                    # T3 - Triple Exponential Moving Average (T3) # input == 1, output == 1
-                    _extra = func_extra(name="t3", _df=df0, _func=abstract.T3, _periods=_periods)
-                    df = pd.concat([df, _extra], axis=1)
-
-                    # TEMA - Triple Exponential Moving Average # input == 1, output == 1
-                    _extra = func_extra(name="tema", _df=df0, _func=abstract.TEMA, _periods=_periods)
-                    df = pd.concat([df, _extra], axis=1)
-
-                    # TRIMA - Triangular Moving Average # input == 1, output == 1
-                    _extra = func_extra(name="trima", _df=df0, _func=abstract.TRIMA, _periods=_periods)
-                    df = pd.concat([df, _extra], axis=1)
-
-                    # WMA - Weighted Moving Average # input == 1, output == 1
-                    _extra = func_extra(name="wma", _df=df0, _func=abstract.WMA, _periods=_periods)
-                    df = pd.concat([df, _extra], axis=1)
+                    # # T3 - Triple Exponential Moving Average (T3) # input == 1, output == 1
+                    # _extra = func_extra(name="t3", _df=df0, _func=abstract.T3, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # TEMA - Triple Exponential Moving Average # input == 1, output == 1
+                    # _extra = func_extra(name="tema", _df=df0, _func=abstract.TEMA, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # TRIMA - Triangular Moving Average # input == 1, output == 1
+                    # _extra = func_extra(name="trima", _df=df0, _func=abstract.TRIMA, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # WMA - Weighted Moving Average # input == 1, output == 1
+                    # _extra = func_extra(name="wma", _df=df0, _func=abstract.WMA, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
 
                     # --------------- Overlap Studies Functions ---------------
 
@@ -190,27 +190,47 @@ if __name__ == '__main__':
 
                     # --------------- Volatility Indicator Functions ---------------
 
+                    # --------------- Price Transform Functions ---------------
+
+                    # AVGPRICE - Average Price # input == df, output == 1
+                    _extra = func_extra(name="avgprice", _df=df0, _func=abstract.AVGPRICE, _periods=[])
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # MEDPRICE - Median Price # input == df, output == 1
+                    _extra = func_extra(name="medprice", _df=df0, _func=abstract.MEDPRICE, _periods=[])
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # TYPPRICE - Typical Price # input == df, output == 1
+                    _extra = func_extra(name="typprice", _df=df0, _func=abstract.TYPPRICE, _periods=[])
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # WCLPRICE - Weighted Close Price # input == df, output == 1
+                    _extra = func_extra(name="wclprice", _df=df0, _func=abstract.WCLPRICE, _periods=[])
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # --------------- Price Transform Functions ---------------
+
                     # --------------- Cycle Indicator Functions ---------------
 
-                    # HT_DCPERIOD - Hilbert Transform - Dominant Cycle Period # input == df, output == 1
-                    _extra = func_extra(name="ht_dcperiod", _df=df0, _func=abstract.HT_DCPERIOD, _periods=[])
-                    df = pd.concat([df, _extra], axis=1)
-
-                    # HT_DCPHASE - Hilbert Transform - Dominant Cycle Phase # input == df, output == 1
-                    _extra = func_extra(name="ht_dcphase", _df=df0, _func=abstract.HT_DCPHASE, _periods=[])
-                    df = pd.concat([df, _extra], axis=1)
-
-                    # HT_PHASOR - Hilbert Transform - Phasor Components # input == df, output == 1
-                    _extra = func_extra(name="ht_dcphasor", _df=df0, _func=abstract.HT_PHASOR, _periods=[], _return=2, _return_names=["inphase", "quadrature"])
-                    df = pd.concat([df, _extra], axis=1)
-
-                    # HT_SINE - Hilbert Transform - SineWave # input == df, output == 1
-                    _extra = func_extra(name="ht_sine", _df=df0, _func=abstract.HT_SINE, _periods=[], _return=2, _return_names=["sine", "leadsine"])
-                    df = pd.concat([df, _extra], axis=1)
-
-                    # HT_TRENDMODE - Hilbert Transform - Trend vs Cycle Mode # input == df, output == 1
-                    _extra = func_extra(name="ht_trendmode", _df=df0, _func=abstract.HT_TRENDMODE, _periods=[])
-                    df = pd.concat([df, _extra], axis=1)
+                    # # HT_DCPERIOD - Hilbert Transform - Dominant Cycle Period # input == df, output == 1
+                    # _extra = func_extra(name="ht_dcperiod", _df=df0, _func=abstract.HT_DCPERIOD, _periods=[])
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # HT_DCPHASE - Hilbert Transform - Dominant Cycle Phase # input == df, output == 1
+                    # _extra = func_extra(name="ht_dcphase", _df=df0, _func=abstract.HT_DCPHASE, _periods=[])
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # HT_PHASOR - Hilbert Transform - Phasor Components # input == df, output == 1
+                    # _extra = func_extra(name="ht_dcphasor", _df=df0, _func=abstract.HT_PHASOR, _periods=[], _return=2, _return_names=["inphase", "quadrature"])
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # HT_SINE - Hilbert Transform - SineWave # input == df, output == 1
+                    # _extra = func_extra(name="ht_sine", _df=df0, _func=abstract.HT_SINE, _periods=[], _return=2, _return_names=["sine", "leadsine"])
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # HT_TRENDMODE - Hilbert Transform - Trend vs Cycle Mode # input == df, output == 1
+                    # _extra = func_extra(name="ht_trendmode", _df=df0, _func=abstract.HT_TRENDMODE, _periods=[])
+                    # df = pd.concat([df, _extra], axis=1)
 
                     # --------------- Cycle Indicator Functions ---------------
 
