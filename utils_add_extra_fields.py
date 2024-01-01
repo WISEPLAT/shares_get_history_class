@@ -31,13 +31,12 @@ def func_extra(name, _df, _func, _periods, _periods2=None, _return=None, _return
         if not _return:
             _df_func[_field] = _f
             _df_func[_field] = _df_func[_field].astype(float).round(2)
-        elif _return == 2:
-            _field = f"{name}_{_period}_{_return_names[0]}"
-            _field2 = f"{name}_{_period}_{_return_names[1]}"
+        elif _return > 1:
             _temp_df = _f
-            _df_func[_field], _df_func[_field2] = _temp_df[_return_names[0]], _temp_df[_return_names[1]]
-            _df_func[_field] = _df_func[_field].astype(float).round(2)
-            _df_func[_field2] = _df_func[_field2].astype(float).round(2)
+            for i in range(_return):
+                _field = f"{name}_{_period}_{_return_names[i]}"
+                _df_func[_field] = _temp_df[_return_names[i]]
+                _df_func[_field] = _df_func[_field].astype(float).round(2)
 
     return _df_func
 
