@@ -86,11 +86,15 @@ if __name__ == '__main__':
 
                     # --------------- Overlap Studies Functions ---------------
 
-                    # EMA
+                    # DEMA - Double Exponential Moving Average # input == df, output == 1
+                    _extra = func_extra(name="dema", _df=df0, _func=abstract.DEMA, _periods=_periods)
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # EMA - Exponential Moving Average # input == df, output == 1
                     _extra = func_extra(name="ema", _df=df0, _func=abstract.EMA, _periods=_periods)
                     df = pd.concat([df, _extra], axis=1)
 
-                    # SMA
+                    # SMA - Simple Moving Average # input == df, output == 1
                     _extra = func_extra(name="sma", _df=df0, _func=abstract.SMA, _periods=_periods)
                     df = pd.concat([df, _extra], axis=1)
 
