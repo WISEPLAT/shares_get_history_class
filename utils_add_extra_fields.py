@@ -19,6 +19,7 @@ def export_to_csv_from_df(ticker, timeframe, data, export_dir, by_timeframes=Fal
 def func_extra(name, _df, _func, _periods, _periods2=None, _return=None, _return_names=None):
     _df_func = pd.DataFrame()
     _mult = 2
+    _mult2 = 3
     if not _periods: _periods = ["0", ]
     for _period in _periods:
 
@@ -31,6 +32,18 @@ def func_extra(name, _df, _func, _periods, _periods2=None, _return=None, _return
         elif name in ["macd", ]:  # _periods2 == 3:
             _f = _func(_df, fastperiod=_period, slowperiod=_period*_mult, signalperiod=int(_period/2))
             _field = f"{name}_{_period}_{_period*_mult}_{int(_period/2)}"
+        elif name in ["stoch", ]:
+            _f = _func(_df, fastk_period=_period, slowk_period=_period*_mult, slowk_matype=0, slowd_period=int(_period/2), slowd_matype=0, )
+            _field = f"{name}_{_period}_{_period*_mult}_{int(_period/2)}"
+        elif name in ["stochf", ]:
+            _f = _func(_df, fastk_period=_period*_mult, fastd_period=_period, fastd_matype=0)
+            _field = f"{name}_{_period}_{_period*_mult}"
+        elif name in ["stochrsi", ]:
+            _f = _func(_df, fastk_period=_period, fastd_period=int(_period/2), fastd_matype=0, timeperiod=_period*_mult, )
+            _field = f"{name}_{_period}_{_period*_mult}_{_period*_mult}"
+        elif name in ["ultosc", ]:
+            _f = _func(_df, timeperiod1=_period, timeperiod2=_period*_mult, timeperiod3=_period*_mult2)
+            _field = f"{name}_{_period}_{_period*_mult}_{_period*_mult2}"
 
         if not _return:
             _df_func[_field] = _f
@@ -180,6 +193,30 @@ if __name__ == '__main__':
                     # # RSI - Relative Strength Index # input == 1, output == 1
                     # _extra = func_extra(name="rsi", _df=df0, _func=abstract.RSI, _periods=_periods)
                     # df = pd.concat([df, _extra], axis=1)
+
+                    # # STOCH - Stochastic # input == 3, output == N
+                    # _extra = func_extra(name="stoch", _df=df0, _func=abstract.STOCH, _periods=_periods, _periods2=3, _return=2, _return_names=["slowk", "slowd"])
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # STOCHF - Stochastic Fast # input == 2, output == N
+                    # _extra = func_extra(name="stochf", _df=df0, _func=abstract.STOCHF, _periods=_periods, _periods2=2, _return=2, _return_names=["fastk", "fastd"])
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # STOCHRSI - Stochastic Relative Strength Index # input == 2, output == N
+                    # _extra = func_extra(name="stochrsi", _df=df0, _func=abstract.STOCHRSI, _periods=_periods, _periods2=3, _return=2, _return_names=["fastk", "fastd"])
+                    # df = pd.concat([df, _extra], axis=1)
+
+                    # # TRIX - 1-day Rate-Of-Change (ROC) of a Triple Smooth EMA # input == 1, output == 1
+                    # _extra = func_extra(name="trix", _df=df0, _func=abstract.TRIX, _periods=_periods)
+                    # df = pd.concat([df, _extra], axis=1)
+                    #
+                    # # ULTOSC - Ultimate Oscillator # input == 3, output == 1
+                    # _extra = func_extra(name="ultosc", _df=df0, _func=abstract.ULTOSC, _periods=_periods, _periods2=3, )
+                    # df = pd.concat([df, _extra], axis=1)
+
+                    # WILLR - Williams' %R # input == 1, output == 1
+                    _extra = func_extra(name="willr", _df=df0, _func=abstract.WILLR, _periods=_periods)
+                    df = pd.concat([df, _extra], axis=1)
 
                     # --------------- Momentum Indicator Functions ---------------
 
