@@ -69,6 +69,9 @@ def func_extra(name, _df, _func, _periods, _periods2=None, _return=None, _return
 
 
 if __name__ == '__main__':
+
+    # !!! ~6 Mb => 1 Gb !!! +1298 columns with indicators
+
     # timeframes = ["MN1", "W1", "D1", "H4", "H1", "M30", "M15", "M10", "M5"]
     timeframes = ["MN1", "W1", "D1", ]
     # timeframes = ["H4", "H1", ]
