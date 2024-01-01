@@ -10,7 +10,8 @@ import talib
 from talib import abstract
 
 
-def export_to_csv_from_df(ticker, timeframe, data, export_dir, by_timeframes=False):
+def export_to_csv_from_df(ticker, timeframe, data, export_dir, by_timeframes=False, to_bigger_disk=False):
+    if to_bigger_disk: export_dir = os.path.join(to_bigger_disk, export_dir)
     if not os.path.exists(export_dir): os.makedirs(export_dir)
     if by_timeframes:
         export_dir = os.path.join(export_dir, timeframe)
@@ -73,8 +74,8 @@ if __name__ == '__main__':
     # !!! ~5,9 Mb => 859,3 Mb !!! +1298 columns with indicators => ~x145
 
     # timeframes = ["MN1", "W1", "D1", "H4", "H1", "M30", "M15", "M10", "M5"]
-    timeframes = ["MN1", "W1", "D1", ]
-    # timeframes = ["H4", "H1", ]
+    # timeframes = ["MN1", "W1", "D1", ]
+    timeframes = ["H4", "H1", ]
 
     csv_folders = ["csv_export_usa", "csv_export_rus"]
     csv_folders_appendix = "_extra"
@@ -373,7 +374,8 @@ if __name__ == '__main__':
 
                     # выгружаем в новую папку
                     export_to_csv_from_df(ticker=ticker, timeframe=timeframe, data=data,
-                                          export_dir=os.path.join(current_dir, f"{csv_folder}{csv_folders_appendix}"), by_timeframes=True)
+                                          export_dir=os.path.join(current_dir, f"{csv_folder}{csv_folders_appendix}"),
+                                          by_timeframes=True, to_bigger_disk="d:\\")
 
                     # print(data.info())  # Columns: 1298 entries, datetime to willr_100
 
