@@ -190,6 +190,30 @@ if __name__ == '__main__':
 
                     # --------------- Volatility Indicator Functions ---------------
 
+                    # --------------- Cycle Indicator Functions ---------------
+
+                    # HT_DCPERIOD - Hilbert Transform - Dominant Cycle Period # input == df, output == 1
+                    _extra = func_extra(name="ht_dcperiod", _df=df0, _func=abstract.HT_DCPERIOD, _periods=[])
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # HT_DCPHASE - Hilbert Transform - Dominant Cycle Phase # input == df, output == 1
+                    _extra = func_extra(name="ht_dcphase", _df=df0, _func=abstract.HT_DCPHASE, _periods=[])
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # HT_PHASOR - Hilbert Transform - Phasor Components # input == df, output == 1
+                    _extra = func_extra(name="ht_dcphasor", _df=df0, _func=abstract.HT_PHASOR, _periods=[], _return=2, _return_names=["inphase", "quadrature"])
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # HT_SINE - Hilbert Transform - SineWave # input == df, output == 1
+                    _extra = func_extra(name="ht_sine", _df=df0, _func=abstract.HT_SINE, _periods=[], _return=2, _return_names=["sine", "leadsine"])
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # HT_TRENDMODE - Hilbert Transform - Trend vs Cycle Mode # input == df, output == 1
+                    _extra = func_extra(name="ht_trendmode", _df=df0, _func=abstract.HT_TRENDMODE, _periods=[])
+                    df = pd.concat([df, _extra], axis=1)
+
+                    # --------------- Cycle Indicator Functions ---------------
+
                     # --------------- Momentum Indicator Functions ---------------
 
                     # # ADX - Average Directional Movement Index
