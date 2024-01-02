@@ -1,7 +1,7 @@
 # pip install TA_Lib-0.4.24-cp39-cp39-win_amd64.whl
 # pip install pandas
 
-# exit(1)  # to prevent run
+exit(1)  # to prevent run
 
 import os
 import pandas as pd
