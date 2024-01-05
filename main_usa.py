@@ -1,4 +1,4 @@
-#pip install opencv-python mysqlclient MetaTrader5 pandas pytz
+#pip install opencv-python mysqlclient MetaTrader5 pandas pytz kaggle
 import os
 
 from core.get_shares_data_processor import SharesDataLoader
