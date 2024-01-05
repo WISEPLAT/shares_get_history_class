@@ -1,4 +1,4 @@
-# USA 514 Stocks Prices
+# USA 514 Stocks Prices NASDAQ NYSE
 
 ### ~11 Gb of market data for you and your analysis with NN or other methods 
 
