@@ -13,26 +13,19 @@ pd.set_option('display.width', 1500)      # макс. ширина таблиц�
 
 def main():
     current_dir = os.path.dirname(os.path.abspath(__file__))  # текущая директория
-    how_many_bars = 99999  # сколько баров закачать - предел...
+    how_many_bars = 99999  # сколько баров закачать - предел... - для загрузки с нуля!!!
+    how_many_bars = 2500  # сколько баров закачать - предел... - для обновлений...
 
     utc_till = datetime.datetime.now() + datetime.timedelta(days=1)  # получим данные по завтрашний день
     print(utc_till)
 
-    # timeframes = {mt5.TIMEFRAME_M5, mt5.TIMEFRAME_M10, mt5.TIMEFRAME_M15, mt5.TIMEFRAME_M30, mt5.TIMEFRAME_H1, mt5.TIMEFRAME_H4, mt5.TIMEFRAME_D1, mt5.TIMEFRAME_W1, mt5.TIMEFRAME_MN1}
+    timeframes = {mt5.TIMEFRAME_M5, mt5.TIMEFRAME_M10, mt5.TIMEFRAME_M15, mt5.TIMEFRAME_M30, mt5.TIMEFRAME_H1, mt5.TIMEFRAME_H4, mt5.TIMEFRAME_D1, mt5.TIMEFRAME_W1, mt5.TIMEFRAME_MN1}
     # timeframes = {mt5.TIMEFRAME_H1, mt5.TIMEFRAME_H4, mt5.TIMEFRAME_D1, mt5.TIMEFRAME_W1, mt5.TIMEFRAME_MN1}
     # timeframes = {mt5.TIMEFRAME_M5, mt5.TIMEFRAME_M10, mt5.TIMEFRAME_M15, mt5.TIMEFRAME_M30}  # 99999 - предел...
-    timeframes = {mt5.TIMEFRAME_D1, }
-    tickers = ["VTBR", "GMKN", "SBER", "LKOH", "GAZP", "CHMF", "AFLT", "PLZL"]
+    # timeframes = {mt5.TIMEFRAME_D1, }
+    # timeframes = {mt5.TIMEFRAME_M5, }
+    # tickers = ["VTBR", "GMKN", "SBER", "LKOH", "GAZP", "CHMF", "AFLT", "PLZL"]
     # tickers = {"ALLFUTRTSI"}  # только через Финам ..
-
-    # tickers = ['ABIO', 'AFKS', 'AFLT', 'AGRO', 'AKRN', 'ALRS', 'APTK', 'AQUA', 'BANEP', 'BELU', 'BSPB', 'CBOM', 'CHMF',
-    #  'CHMK', 'CIAN', 'DVEC', 'ELFV', 'ENPG', 'ETLN', 'FEES', 'FESH', 'FIVE', 'FIXP', 'FLOT', 'GAZP', 'GEMC', 'GLTR',
-    #  'GMKN', 'HHRU', 'HYDR', 'IRAO', 'KAZT', 'KZOS', 'KZOSP', 'LENT', 'LKOH', 'LSNGP', 'LSRG', 'MAGN', 'MDMG', 'MGNT',
-    #  'MGTSP', 'MOEX', 'MRKC', 'MRKP', 'MRKU', 'MRKV', 'MRKZ', 'MSNG', 'MSRS', 'MTLR', 'MTLRP', 'MTSS', 'MVID', 'NKHP',
-    #  'NKNC', 'NKNCP', 'NLMK', 'NVTK', 'OGKB', 'OKEY', 'OZON', 'PHOR', 'PIKK', 'PLZL', 'POLY', 'POSI', 'QIWI', 'RASP',
-    #  'RENI', 'RKKE', 'RNFT', 'ROSN', 'RTKM', 'RTKMP', 'RUAL', 'SBER', 'SBERP', 'SELG', 'SFIN', 'SGZH', 'SMLT', 'SNGS',
-    #  'SNGSP', 'SPBE', 'SVAV', 'TATN', 'TATNP', 'TCSG', 'TGKA', 'TGKB', 'TRNFP', 'TTLK', 'UPRO', 'VKCO', 'VSMO', 'VTBR',
-    #  'WUSH', 'YNDX']
 
     tickers = ['ABIO', 'ABRD', 'ACKO', 'AFKS', 'AFLT', 'AGRO', 'AKRN', 'ALRS', 'AMEZ', 'APTK', 'AQUA', 'ARSA', 'ASSB',
                'ASTR', 'AVAN', 'BANE', 'BANEP', 'BELU', 'BISVP', 'BLNG', 'BRZL', 'BSPB', 'BSPBP', 'CARM', 'CBOM',
@@ -65,9 +58,11 @@ def main():
                 load_data = SharesDataLoader(ticket)
                 load_data.connect_to_metatrader5(path=f"C:\Program Files\FINAM MetaTrader 5\terminal64.exe")
                 data = load_data.get_share_data(ticket=ticket, timeframe=timeframe, utc_till=utc_till, how_many_bars=how_many_bars, remove_today_bars=True)
+                if len(data): print(f'- данные по тикеру {ticket} загружены: {data["time"].iloc[0]} - {data["time"].iloc[-1]} \t size: {len(data)}')
                 load_data.export_to_csv_from_df(ticket=ticket, timeframe=timeframe, data=data, export_dir=os.path.join(current_dir, "csv_export_rus"), by_timeframes=True)
                 load_data.disconnect_from_metatrader5()
-            except:
+            except Exception as e:
+                print(f"Error: {e}")
                 cant_load_tickers.append(ticket)
 
     print("cant_load_tickers:", cant_load_tickers)

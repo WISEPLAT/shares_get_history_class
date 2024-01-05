@@ -61,12 +61,12 @@ class SharesDataLoader():
                 indexes = rates_frame.index.tolist()
                 for j in range(1, len(indexes) + 1):
                     if indexes[len(indexes) - j] < now:
-                        print("ok j = ", j)
+                        # print("ok j = ", j)
                         # df_new = df_new[len(indexes) - j + 1:]      # хвост данных
                         rates_frame = rates_frame[:len(indexes) - j + 1]
                         break
                 rates_frame.reset_index(inplace=True)
-                print(rates_frame)
+                # print(rates_frame)
 
         return rates_frame
 
@@ -107,8 +107,8 @@ class SharesDataLoader():
         if timeframe == mt5.TIMEFRAME_M5:   _timeframe = "M5"
         if timeframe == mt5.TIMEFRAME_M1:   _timeframe = "M1"
 
-        print(ticket)
-        print(data)
+        # print(ticket)
+        # print(data)
         data = data[["time", "open", "high", "low", "close", "real_volume"]]
         data.rename(columns={"time": "datetime", "real_volume": "volume"}, inplace=True)
 
@@ -116,7 +116,38 @@ class SharesDataLoader():
         if by_timeframes:
             export_dir = os.path.join(export_dir, _timeframe)
             if not os.path.exists(export_dir): os.makedirs(export_dir)
-        data.to_csv(os.path.join(export_dir, ticket+"_"+_timeframe+".csv"), index=False, encoding='utf-8')
+
+        filename = os.path.join(export_dir, ticket+"_"+_timeframe+".csv")
+        is_file_exists = os.path.isfile(filename)  # Существует ли файл
+        if is_file_exists:
+            # если файл есть, то объединяем
+            data_from_file = pd.read_csv(filename)  # Считываем файл в DataFrame
+            if _timeframe in ['D1', 'W1', 'MN1']:
+                data_from_file["datetime"] = pd.to_datetime(data_from_file["datetime"], format='%Y-%m-%d')  # Переводим индекс в формат datetime
+            else:
+                data_from_file["datetime"] = pd.to_datetime(data_from_file["datetime"], format='%Y-%m-%d %H:%M:%S')  # Переводим индекс в формат datetime
+
+            _last_date_from_csv = data_from_file["datetime"].iloc[-1]
+
+            _first_date_from_data = data["datetime"].iloc[0]
+            _last_date_from_data = data["datetime"].iloc[-1]
+
+            if _last_date_from_data == _last_date_from_csv:
+                print(f"- нечего обновлять по тикеру {ticket}...")
+                return
+
+            j = 0
+            for j in range(0, len(data)):
+                _date_from_data = data["datetime"].iloc[j]
+                if _date_from_data > _last_date_from_csv:
+                    data = data.iloc[j:]
+                    break
+
+            print(f'- считан csv файл по тикеру {ticket}: {data_from_file["datetime"].iloc[0]} - {data_from_file["datetime"].iloc[-1]} \t size: {len(data_from_file)}')
+            data = pd.concat([data_from_file, data])  # Объединяем файл и данные
+
+        print(f'- записаны данные в csv файл по тикеру {ticket}: {data["datetime"].iloc[0]} - {data["datetime"].iloc[-1]} \t size: {len(data)}')
+        data.to_csv(filename, index=False, encoding='utf-8')
 
     def export_to_csv(self, ticket, timeframe, how_many_bars, export_dir):
         _timeframe = "D1"
