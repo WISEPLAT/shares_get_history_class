@@ -1,4 +1,4 @@
-# RUSSIA 249 Stocks Prices
+# RUSSIA 249 Stocks Prices MOEX
 
 ### ~3 Gb of market data for you and your analysis with NN or other methods 
 
