@@ -47,7 +47,7 @@ class SharesDataLoader():
             print("connection to DB failed, error code =", ex)
             quit()
 
-    def is_file_csv_exists(self, ticker, timeframe, how_many_bars_max, how_many_bars_update, export_dir):
+    def is_file_csv_exists(self, ticker, timeframe, how_many_bars_max, how_many_bars_update, export_dir, by_timeframes=False):
         _timeframe = "D1"
         if timeframe == mt5.TIMEFRAME_MN1:  _timeframe = "MN1"
         if timeframe == mt5.TIMEFRAME_W1:   _timeframe = "W1"
@@ -60,6 +60,8 @@ class SharesDataLoader():
         if timeframe == mt5.TIMEFRAME_M5:   _timeframe = "M5"
         if timeframe == mt5.TIMEFRAME_M1:   _timeframe = "M1"
 
+        if by_timeframes:
+            export_dir = os.path.join(export_dir, _timeframe)
         filename = os.path.join(export_dir, ticker + "_" + _timeframe + ".csv")
         is_file_exists = os.path.isfile(filename)  # Существует ли файл
         if is_file_exists:
