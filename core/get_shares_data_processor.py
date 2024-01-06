@@ -133,7 +133,7 @@ class SharesDataLoader():
             _last_date_from_data = data["datetime"].iloc[-1]
 
             if _last_date_from_data == _last_date_from_csv:
-                print(f"- нечего обновлять по тикеру {ticket}...")
+                print(f"- нечего обновлять по тикеру {ticket} {_timeframe} ...")
                 return
 
             j = 0
@@ -143,10 +143,11 @@ class SharesDataLoader():
                     data = data.iloc[j:]
                     break
 
-            print(f'- считан csv файл по тикеру {ticket}: {data_from_file["datetime"].iloc[0]} - {data_from_file["datetime"].iloc[-1]} \t size: {len(data_from_file)}')
+            print(f'- считан csv файл по тикеру {ticket} {_timeframe}: {data_from_file["datetime"].iloc[0]} - {data_from_file["datetime"].iloc[-1]} \t size: {len(data_from_file)}')
             data = pd.concat([data_from_file, data])  # Объединяем файл и данные
 
-        print(f'- записаны данные в csv файл по тикеру {ticket}: {data["datetime"].iloc[0]} - {data["datetime"].iloc[-1]} \t size: {len(data)}')
+        data["volume"] = data["volume"].astype('int32')
+        print(f'- записаны данные в csv файл по тикеру {ticket} {_timeframe}: {data["datetime"].iloc[0]} - {data["datetime"].iloc[-1]} \t size: {len(data)}')
         data.to_csv(filename, index=False, encoding='utf-8')
 
     def export_to_csv(self, ticket, timeframe, how_many_bars, export_dir):
