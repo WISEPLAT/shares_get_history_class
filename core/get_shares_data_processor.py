@@ -47,8 +47,27 @@ class SharesDataLoader():
             print("connection to DB failed, error code =", ex)
             quit()
 
-    def get_share_data(self, ticket, timeframe, utc_till, how_many_bars, remove_today_bars=False):
-        rates = mt5.copy_rates_from(ticket, timeframe, utc_till, how_many_bars)
+    def is_file_csv_exists(self, ticker, timeframe, how_many_bars_max, how_many_bars_update, export_dir):
+        _timeframe = "D1"
+        if timeframe == mt5.TIMEFRAME_MN1:  _timeframe = "MN1"
+        if timeframe == mt5.TIMEFRAME_W1:   _timeframe = "W1"
+        if timeframe == mt5.TIMEFRAME_D1:   _timeframe = "D1"
+        if timeframe == mt5.TIMEFRAME_H4:   _timeframe = "H4"
+        if timeframe == mt5.TIMEFRAME_H1:   _timeframe = "H1"
+        if timeframe == mt5.TIMEFRAME_M30:  _timeframe = "M30"
+        if timeframe == mt5.TIMEFRAME_M15:  _timeframe = "M15"
+        if timeframe == mt5.TIMEFRAME_M10:  _timeframe = "M10"
+        if timeframe == mt5.TIMEFRAME_M5:   _timeframe = "M5"
+        if timeframe == mt5.TIMEFRAME_M1:   _timeframe = "M1"
+
+        filename = os.path.join(export_dir, ticker + "_" + _timeframe + ".csv")
+        is_file_exists = os.path.isfile(filename)  # Существует ли файл
+        if is_file_exists:
+            return how_many_bars_update
+        return how_many_bars_max
+
+    def get_share_data(self, ticker, timeframe, utc_till, how_many_bars, remove_today_bars=False):
+        rates = mt5.copy_rates_from(ticker, timeframe, utc_till, how_many_bars)
         # создадим из полученных данных DataFrame
         rates_frame = pd.DataFrame(rates)
         # сконвертируем время в виде секунд в формат datetime
@@ -70,7 +89,7 @@ class SharesDataLoader():
 
         return rates_frame
 
-    def get_share_data_from_db(self, ticket, timeframe, how_many_bars):
+    def get_share_data_from_db(self, ticker, timeframe, how_many_bars):
         if timeframe == mt5.TIMEFRAME_MN1:  timeframe = "MN1"
         if timeframe == mt5.TIMEFRAME_W1:   timeframe = "W1"
         if timeframe == mt5.TIMEFRAME_D1:   timeframe = "D1"
@@ -82,7 +101,7 @@ class SharesDataLoader():
         if timeframe == mt5.TIMEFRAME_M5:   timeframe = "M5"
         if timeframe == mt5.TIMEFRAME_M1:   timeframe = "M1"
 
-        table_name = ticket + "_" + timeframe
+        table_name = ticker + "_" + timeframe
         self.cursor.execute(
             "SELECT time, open, high, low, close, volume FROM `" + table_name + "`" + " ORDER BY time DESC LIMIT " + str(how_many_bars)
         )
@@ -94,7 +113,7 @@ class SharesDataLoader():
         #print(dataframe.dtypes)
         return dataframe
 
-    def export_to_csv_from_df(self, ticket, timeframe, data, export_dir, by_timeframes=False):
+    def export_to_csv_from_df(self, ticker, timeframe, data, export_dir, by_timeframes=False):
         _timeframe = "D1"
         if timeframe == mt5.TIMEFRAME_MN1:  _timeframe = "MN1"
         if timeframe == mt5.TIMEFRAME_W1:   _timeframe = "W1"
@@ -107,7 +126,7 @@ class SharesDataLoader():
         if timeframe == mt5.TIMEFRAME_M5:   _timeframe = "M5"
         if timeframe == mt5.TIMEFRAME_M1:   _timeframe = "M1"
 
-        # print(ticket)
+        # print(ticker)
         # print(data)
         data = data[["time", "open", "high", "low", "close", "real_volume"]]
         data.rename(columns={"time": "datetime", "real_volume": "volume"}, inplace=True)
@@ -117,7 +136,7 @@ class SharesDataLoader():
             export_dir = os.path.join(export_dir, _timeframe)
             if not os.path.exists(export_dir): os.makedirs(export_dir)
 
-        filename = os.path.join(export_dir, ticket+"_"+_timeframe+".csv")
+        filename = os.path.join(export_dir, ticker+"_"+_timeframe+".csv")
         is_file_exists = os.path.isfile(filename)  # Существует ли файл
         if is_file_exists:
             # если файл есть, то объединяем
@@ -133,7 +152,7 @@ class SharesDataLoader():
             _last_date_from_data = data["datetime"].iloc[-1]
 
             if _last_date_from_data == _last_date_from_csv:
-                print(f"- нечего обновлять по тикеру {ticket} {_timeframe} ...")
+                print(f"- нечего обновлять по тикеру {ticker} {_timeframe} ...")
                 return
 
             j = 0
@@ -143,14 +162,14 @@ class SharesDataLoader():
                     data = data.iloc[j:]
                     break
 
-            print(f'- считан csv файл по тикеру {ticket} {_timeframe}: {data_from_file["datetime"].iloc[0]} - {data_from_file["datetime"].iloc[-1]} \t size: {len(data_from_file)}')
+            print(f'- считан csv файл по тикеру {ticker} {_timeframe}: {data_from_file["datetime"].iloc[0]} - {data_from_file["datetime"].iloc[-1]} \t size: {len(data_from_file)}')
             data = pd.concat([data_from_file, data])  # Объединяем файл и данные
 
         data["volume"] = data["volume"].astype('int32')
-        print(f'- записаны данные в csv файл по тикеру {ticket} {_timeframe}: {data["datetime"].iloc[0]} - {data["datetime"].iloc[-1]} \t size: {len(data)}')
+        print(f'- записаны данные в csv файл по тикеру {ticker} {_timeframe}: {data["datetime"].iloc[0]} - {data["datetime"].iloc[-1]} \t size: {len(data)}')
         data.to_csv(filename, index=False, encoding='utf-8')
 
-    def export_to_csv(self, ticket, timeframe, how_many_bars, export_dir):
+    def export_to_csv(self, ticker, timeframe, how_many_bars, export_dir):
         _timeframe = "D1"
         if timeframe == mt5.TIMEFRAME_MN1:  _timeframe = "MN1"
         if timeframe == mt5.TIMEFRAME_W1:   _timeframe = "W1"
@@ -163,7 +182,7 @@ class SharesDataLoader():
         if timeframe == mt5.TIMEFRAME_M5:   _timeframe = "M5"
         if timeframe == mt5.TIMEFRAME_M1:   _timeframe = "M1"
 
-        table_name = ticket + "_" + _timeframe
+        table_name = ticker + "_" + _timeframe
         self.cursor.execute(
             "SELECT time, open, high, low, close, volume FROM `" + table_name + "`" + " ORDER BY time DESC LIMIT " + str(how_many_bars)
         )
@@ -174,9 +193,9 @@ class SharesDataLoader():
         dataframe = dataframe[::-1].reset_index(drop=True)  # Reverse Ordering of DataFrame Rows + Reset index
 
         if not os.path.exists(export_dir): os.makedirs(export_dir)
-        dataframe.to_csv(os.path.join(export_dir, ticket+"_"+_timeframe+".csv"), index=False, encoding='utf-8')
+        dataframe.to_csv(os.path.join(export_dir, ticker+"_"+_timeframe+".csv"), index=False, encoding='utf-8')
 
-    def always_get_share_data(self, ticket, timeframe):
+    def always_get_share_data(self, ticker, timeframe):
         _timeframe = "D1"
         how_many_bars = 0
         time_in_seconds_bar = 0
@@ -200,7 +219,7 @@ class SharesDataLoader():
         if timeframe == mt5.TIMEFRAME_M5:   _timeframe = "M5"
         if timeframe == mt5.TIMEFRAME_M1:   _timeframe = "M1"
 
-        table_name = ticket + "_" + _timeframe
+        table_name = ticker + "_" + _timeframe
 
         # ----------------------- UPDATE HISTORY -----------------------
         while True:
@@ -229,7 +248,7 @@ class SharesDataLoader():
             # получим данные по завтрашний день
             utc_till = datetime.datetime.now() + datetime.timedelta(days=1)
             print(utc_till)
-            rates = mt5.copy_rates_from(ticket, timeframe, utc_till, how_many_bars)
+            rates = mt5.copy_rates_from(ticker, timeframe, utc_till, how_many_bars)
 
             # создадим из полученных данных DataFrame
             rates_frame = pd.DataFrame(rates)
@@ -312,7 +331,7 @@ class SharesDataLoader():
 
             check_we_have_next_bar_loaded = False
             while not check_we_have_next_bar_loaded:
-                rates = mt5.copy_rates_from(ticket, timeframe, utc_till, how_many_bars)
+                rates = mt5.copy_rates_from(ticker, timeframe, utc_till, how_many_bars)
 
                 # создадим из полученных данных DataFrame
                 rates_frame = pd.DataFrame(rates)

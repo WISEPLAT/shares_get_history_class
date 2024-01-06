@@ -52,17 +52,17 @@ def main():
     cant_load_tickers = []
 
     for timeframe in timeframes:
-        for ticket in tickers:
+        for ticker in tickers:
             try:
-                load_data = SharesDataLoader(ticket)
+                load_data = SharesDataLoader(ticker)
                 load_data.connect_to_metatrader5(path=f"C:\Program Files\FINAM MetaTrader 5\terminal64.exe")
-                data = load_data.get_share_data(ticket=ticket, timeframe=timeframe, utc_till=utc_till, how_many_bars=how_many_bars, remove_today_bars=True)
-                if len(data): print(f'- данные по тикеру {ticket} {timeframe} загружены: {data["time"].iloc[0]} - {data["time"].iloc[-1]} \t size: {len(data)}')
-                load_data.export_to_csv_from_df(ticket=ticket, timeframe=timeframe, data=data, export_dir=os.path.join(current_dir, "csv_export_rus"), by_timeframes=True)
+                data = load_data.get_share_data(ticker=ticker, timeframe=timeframe, utc_till=utc_till, how_many_bars=how_many_bars, remove_today_bars=True)
+                if len(data): print(f'- данные по тикеру {ticker} {timeframe} загружены: {data["time"].iloc[0]} - {data["time"].iloc[-1]} \t size: {len(data)}')
+                load_data.export_to_csv_from_df(ticker=ticker, timeframe=timeframe, data=data, export_dir=os.path.join(current_dir, "csv_export_rus"), by_timeframes=True)
                 load_data.disconnect_from_metatrader5()
             except Exception as e:
                 print(f"Error: {e}")
-                cant_load_tickers.append(ticket)
+                cant_load_tickers.append(ticker)
 
     print("cant_load_tickers:", cant_load_tickers)
 

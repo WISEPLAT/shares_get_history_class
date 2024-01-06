@@ -293,19 +293,19 @@ def get_hkd_shares(name):
     cant_load_tickers = []
 
     for timeframe in timeframes:
-        for ticket in tickers:
+        for ticker in tickers:
             try:
                 time_of_getting_data = datetime.datetime.now()
-                load_data = SharesDataLoader(ticket)
+                load_data = SharesDataLoader(ticker)
                 load_data.connect_to_metatrader5(path=f"C:\Program Files\FINAM MetaTrader 5\terminal64.exe")
-                data = load_data.get_share_data(ticket=ticket, timeframe=timeframe, utc_till=utc_till,
+                data = load_data.get_share_data(ticker=ticker, timeframe=timeframe, utc_till=utc_till,
                                                 how_many_bars=how_many_bars, remove_today_bars=True)
-                load_data.export_to_csv_from_df(ticket=ticket, timeframe=timeframe, data=data,
+                load_data.export_to_csv_from_df(ticker=ticker, timeframe=timeframe, data=data,
                                                 export_dir=os.path.join(current_dir, "csv_export_hkd"),
                                                 by_timeframes=True)
                 load_data.disconnect_from_metatrader5()
             except:
-                cant_load_tickers.append(ticket)
+                cant_load_tickers.append(ticker)
 
     print("cant_load_tickers:", cant_load_tickers)
 
