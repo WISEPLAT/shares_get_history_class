@@ -1,0 +1,5 @@
+# git clone https://github.com/WISEPLAT/FinamPy
+# git clone https://github.com/WISEPLAT/publish_dataset_to_kaggle
+# pip install pytz, requests, grpcio, protobuf, types-protobuf, googleapis-common-protos
+# pip install MetaTrader5 pandas pytz kaggle
+# pip install python-binance pybit
